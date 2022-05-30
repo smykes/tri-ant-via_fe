@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
 import { Paper } from "@mui/material";
-
+import { Typography } from "@mui/material";
 interface IForm {
   answer: string;
   clue: string;
@@ -17,19 +17,19 @@ interface IFormArray {
   flag: string;
   user: string;
 }
-export const Winners = () => {
+export const Today = () => {
   const [triviaWinners, setTriviaWinners] = useState<Array<IForm>>();
-
   useEffect(() => {
-    async function fetchBooks() {
-      const res = await fetch(`//localhost:3001/api/trivia`);
+    alert();
+    async function fetchWinner() {
+      const res = await fetch(`//localhost:3001/api/trivia/today`);
       const json = await res.json();
       if (json) {
         console.log(json);
         setTriviaWinners(json);
       }
     }
-    fetchBooks();
+    fetchWinner();
   }, []);
 
   return (
@@ -53,7 +53,9 @@ export const Winners = () => {
               }}
             >
               <>
-                🫡
+                <Typography variant="h1" component="h2">
+                  {winner.winners[0].flag}
+                </Typography>
                 {winner.clue} - <a href={winner.url}>{winner.answer} </a>
                 {winner.winners[0].user} - {winner.winners[0].country}
               </>
