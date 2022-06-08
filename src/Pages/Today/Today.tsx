@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Container } from "@mui/material";
-import { Paper } from "@mui/material";
-import { Box } from "@mui/material";
+import { Container, CardContent, CardActions } from "@mui/material";
+
+import Button from "@mui/material/Button";
+
+import { Card } from "@mui/material";
 import { Typography } from "@mui/material";
 interface IForm {
   answer: string;
@@ -42,51 +44,80 @@ export const Today = () => {
 
   return (
     <Container maxWidth="xs">
-      <Paper elevation={3} sx={{ marginTop: "3em", padding: "2em" }}>
-        <Box
-          sx={{
-            color: "text.secondary",
-            marginBottom: "0.25em",
-            float: "right",
-            clear: "all",
-            fontWeight: 900,
-          }}
-        >
-          {dayWinner && <div>{getDate(dayWinner.clue_date)}</div>}
-        </Box>
-        <Box
-          sx={{
-            color: "text.primary",
-            fontSize: "8em",
-            marginBottom: "0.25em",
-            clear: "both",
-            textAlign: "center",
-          }}
-        >
-          {dayWinner && <div>{dayWinner.winners[0].flag}</div>}
-        </Box>
-        <Box sx={{ color: "text.secondary", marginBottom: "0.25em" }}>
-          {dayWinner && <div>{dayWinner.clue}</div>}
-        </Box>
-        <Box sx={{ color: "text.secondary", marginBottom: "0.25em" }}>
-          {dayWinner && (
-            <div>
-              <a href={dayWinner.url} rel="noreferrer" target="_blank">
-                {dayWinner.answer}
-              </a>
-            </div>
-          )}
-        </Box>
-        <Box
-          sx={{
-            color: "text.primary",
-            fontSize: "1em",
-            marginBottom: "0.25em",
-          }}
-        >
-          {dayWinner && <div>{dayWinner.winners[0].user}</div>}
-        </Box>
-      </Paper>
+      {!dayWinner && (
+        <Card elevation={3} sx={{ marginTop: "3em" }}>
+          <CardContent>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              Trivia of the Day
+            </Typography>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              You must be early!
+            </Typography>
+            <Button target="_blank" href="#" size="small">
+              View Yesterday
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+      {dayWinner && (
+        <Card elevation={3} sx={{ marginTop: "3em" }}>
+          <CardContent>
+            <Typography
+              sx={{ fontSize: 14, textAlign: "center" }}
+              color="text.secondary"
+              gutterBottom
+            >
+              Trivia of the Day - {dayWinner && getDate(dayWinner.clue_date)}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="h5"
+              sx={{ fontSize: 10, marginTop: "1em" }}
+              component="div"
+            >
+              Clue
+            </Typography>
+            <Typography gutterBottom variant="h5" component="label">
+              {dayWinner && <div>{dayWinner.clue}</div>}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="h5"
+              sx={{ fontSize: 10, marginTop: "1em" }}
+              component="div"
+            >
+              Answer
+            </Typography>
+            <Typography variant="h6" color="text.secondary">
+              {dayWinner.answer}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="h5"
+              sx={{ fontSize: 10, marginTop: "1em" }}
+              component="div"
+            >
+              Winner
+            </Typography>
+            <Button endIcon={dayWinner.winners[0].flag} size="small">
+              {dayWinner.winners[0].user}
+            </Button>
+          </CardContent>
+          <CardActions>
+            <Button target="_blank" href={dayWinner.url} size="small">
+              Learn More
+            </Button>
+          </CardActions>
+        </Card>
+      )}
     </Container>
   );
 };

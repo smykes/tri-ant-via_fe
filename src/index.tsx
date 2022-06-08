@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import { Today } from "./Pages/Today/Today";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login } from "./Pages/Login/Login";
-
+import { Entry } from "./Pages/Entry/Entry";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -14,6 +14,7 @@ root.render(
     <Routes>
       <Route path="/" element={<Today />} />
       <Route path="login" element={<Login />} />
+      <Route path="entry" element={<Entry />} />
     </Routes>
   </BrowserRouter>
 );

@@ -44,7 +44,8 @@ export const Login = () => {
       const tokenObject = getToken(values);
       tokenObject.then((data) => {
         console.log(data.token);
-        setToken(data.token);
+        sessionStorage.setItem("token", data.token);
+        window.location.assign("/entry");
       });
     },
   });
