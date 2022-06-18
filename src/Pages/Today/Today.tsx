@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
-import { Container, CardContent, CardActions } from "@mui/material";
-
+import { Container, CardContent, CardActions, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 import { Card } from "@mui/material";
 import { Typography } from "@mui/material";
+import { DateTime } from "luxon";
+
+interface IWinPayload {
+  all_time_count: number;
+  month_count: number;
+  today: IForm;
+}
+
 interface IForm {
   answer: string;
   clue: string;
@@ -29,7 +37,10 @@ export const Today = () => {
 
     return clueString;
   }
-  const [dayWinner, setDayWinner] = useState<IForm>();
+  const [dayWinner, setDayWinner] = useState<IWinPayload>();
+  const month = DateTime.now();
+  console.log(month);
+
   useEffect(() => {
     async function fetchBooks() {
       const res = await fetch(`//localhost:3001/api/trivia/today`);
@@ -75,18 +86,19 @@ export const Today = () => {
               color="text.secondary"
               gutterBottom
             >
-              Trivia of the Day - {dayWinner && getDate(dayWinner.clue_date)}
+              Trivia of the Day -{" "}
+              {dayWinner && getDate(dayWinner.today.clue_date)}
             </Typography>
             <Typography
               gutterBottom
               variant="h5"
-              sx={{ fontSize: 10, marginTop: "1em" }}
+              sx={{ fontSize: 12, marginTop: "1em" }}
               component="div"
             >
               Clue
             </Typography>
             <Typography gutterBottom variant="h5" component="label">
-              {dayWinner && <div>{dayWinner.clue}</div>}
+              {dayWinner && <div>{dayWinner.today.clue}</div>}
             </Typography>
             <Typography
               gutterBottom
@@ -97,22 +109,58 @@ export const Today = () => {
               Answer
             </Typography>
             <Typography variant="h6" color="text.secondary">
-              {dayWinner.answer}
+              {dayWinner.today.answer}
             </Typography>
             <Typography
               gutterBottom
               variant="h5"
-              sx={{ fontSize: 10, marginTop: "1em" }}
+              sx={{ fontSize: 12, marginTop: "1em" }}
               component="div"
             >
               Winner
             </Typography>
-            <Button endIcon={dayWinner.winners[0].flag} size="small">
-              {dayWinner.winners[0].user}
-            </Button>
+            <Link to={`winner/${dayWinner.today.winners[0].user}`}>
+              {dayWinner.today.winners[0].user}
+            </Link>
+            <Typography
+              gutterBottom
+              variant="h5"
+              sx={{ fontSize: 12, marginTop: "1em" }}
+              component="div"
+            >
+              Country
+            </Typography>
+            <Typography variant="h6" color="text.secondary">
+              {dayWinner.today.winners[0].country} &nbsp;
+              {dayWinner.today.winners[0].flag}
+            </Typography>
+
+            <Typography
+              gutterBottom
+              variant="h5"
+              sx={{ fontSize: 12, marginTop: "1em" }}
+              component="div"
+            >
+              🥇 All Time Wins
+            </Typography>
+            <Typography variant="h6" color="text.secondary">
+              {dayWinner.all_time_count}
+            </Typography>
+
+            <Typography
+              gutterBottom
+              variant="h5"
+              sx={{ fontSize: 12, marginTop: "1em" }}
+              component="div"
+            >
+              🥇 {month.monthLong} Wins
+            </Typography>
+            <Typography variant="h6" color="text.secondary">
+              {dayWinner.month_count}
+            </Typography>
           </CardContent>
           <CardActions>
-            <Button target="_blank" href={dayWinner.url} size="small">
+            <Button target="_blank" href={dayWinner.today.url} size="small">
               Learn More
             </Button>
           </CardActions>
