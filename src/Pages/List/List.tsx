@@ -51,18 +51,20 @@ export const List = () => {
   }, []);
 
   return (
-    <>
-      {dayWinner &&
-        dayWinner?.map((winner) => {
-          return (
-            <>
-              <h6>
-                {getDate(winner.clue_date)} - {winner.winners[0].user}
-              </h6>
-              <h6>{winner.clue}</h6>
-            </>
-          );
-        })}
-    </>
+    <Container maxWidth="xs" sx={{ marginTop: "3em" }}>
+      <Card elevation={3} sx={{ marginTop: "3em" }}>
+        {dayWinner &&
+          dayWinner?.map((winner) => {
+            return (
+              <>
+                <h6>
+                  {getDate(winner.clue_date)} - {winner.winners[0].user}
+                </h6>
+                <h6>{winner.clue}</h6>
+              </>
+            );
+          })}
+      </Card>
+    </Container>
   );
 };

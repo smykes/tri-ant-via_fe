@@ -42,6 +42,7 @@ const validationSchema = yup.object({
 });
 
 async function saveData(data: IForm): Promise<any> {
+  alert();
   const token: string | null = sessionStorage.getItem("token");
   if (token !== null) {
     const res = await fetch("//localhost:3001/api/trivia", {
