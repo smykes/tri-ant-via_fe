@@ -1,12 +1,23 @@
-[build]
-  base="./"
-  publish="./build"
-  command="echo 'npm run build'"
+# [build]
+#   base="./"
+#   publish="./build"
+#   command="echo 'npm install && npm run build'"
 
-[context.production]
-  publish = "./build"
-  command = "echo 'npm run build'"
-  environment = { NODE_VERSION = "14.18.3" }
+# [context.production]
+#   publish = "./build"
+#   command = "echo 'npm install && npm run build'"
+#   environment = { NODE_VERSION = "14.18.3" }
+
+# [context.production.environment]
+#   API = "https://tri-ant-via-be.herokuapp.com/"
+
+[build]
+    publish = "build/"
+    command = "CI=false && npm run build" # CI=false is used because Netlify fails builds that have warnings, which we probably don't want
+    environment = { NODE_VERSION = "14.17.0" }
+# See .env for default environment variable values
 
 [context.production.environment]
-  API = "https://tri-ant-via-be.herokuapp.com/"
+    REACT_APP_ENV = "production"
+
+   
