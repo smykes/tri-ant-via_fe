@@ -37,7 +37,7 @@ export const List = () => {
 
   useEffect(() => {
     async function fetchBooks() {
-      const res = await fetch(`//localhost:3001/api/trivia/list`);
+      const res = await fetch(`//tri-ant-via-be.herokuapp.com/api/trivia/list`);
       const json = await res.json();
       const data: any = json.sort(function (a: any, b: any): number {
         if (a.clue_date < b.clue_date) return -1;

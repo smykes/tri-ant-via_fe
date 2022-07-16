@@ -20,8 +20,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />}>
-        <Route path="/" element={<Today />} />
-
+        <Route path="/" element={<Day />} />
         <Route path="today" element={<Today />} />
         <Route path="login" element={<Login />} />
         <Route path="entry" element={<Entry />} />

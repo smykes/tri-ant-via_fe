@@ -25,7 +25,9 @@ export const Names = () => {
 
   useEffect(() => {
     async function fetchBooks() {
-      const res = await fetch(`//localhost:3001/api/trivia/users`);
+      const res = await fetch(
+        `//tri-ant-via-be.herokuapp.com/api/trivia/users`
+      );
       const json = await res.json();
       json.sort();
 

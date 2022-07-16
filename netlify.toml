@@ -1,0 +1,12 @@
+[build]
+  base="./"
+  publish="./build"
+  command="echo 'npm run build'"
+
+[context.production]
+  publish = "./build"
+  command = "echo 'npm run build'"
+  environment = { NODE_VERSION = "14.18.3" }
+
+[context.production.environment]
+  API = "https://tri-ant-via-be.herokuapp.com/"

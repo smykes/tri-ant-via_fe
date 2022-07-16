@@ -4,7 +4,7 @@ import { Container, CardContent, CardActions, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 
-import { Card } from "@mui/material";
+import { Card, Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import { DateTime } from "luxon";
 import IconButton from "@mui/material/IconButton";
@@ -71,7 +71,7 @@ export const Day = () => {
   useEffect(() => {
     async function fetchBooks() {
       const res = await fetch(
-        `//localhost:3001/api/trivia/day/${month}/${day}/${year}`
+        `//tri-ant-via-be.herokuapp.com/api/trivia/day/${month}/${day}/${year}`
       );
       const json = await res.json();
       if (json) {
@@ -90,8 +90,10 @@ export const Day = () => {
           <CardContent>
             <Typography
               sx={{ fontSize: 14 }}
+              variant="h1"
               color="text.secondary"
               gutterBottom
+              mb={0}
             >
               Trivia of the Day
             </Typography>
@@ -110,35 +112,32 @@ export const Day = () => {
       )}
       {dayWinner && dayWinner.today && (
         <>
-          <Card elevation={3} sx={{ marginTop: "3em" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }} mt="1.5em" mb="0">
+            <Link to={`/day/${formatedPrev}`}>
+              <IconButton color="primary" aria-label="Previous Day">
+                <ArrowCircleLeftIcon />
+              </IconButton>
+            </Link>
+            <Typography
+              sx={{ textAlign: "center", fontWeight: 800 }}
+              color="text.secondary"
+              gutterBottom
+              variant="h5"
+              component="h1"
+              mb="0"
+            >
+              Trivia of the Day -{" "}
+              {dayWinner && getDate(dayWinner.today[0].clue_date)}
+            </Typography>
+            <Link to={`/day/${formatedNext}`}>
+              <IconButton color="primary" aria-label="Next Day">
+                <ArrowCircleRightIcon />
+              </IconButton>
+            </Link>
+          </Box>
+
+          <Card elevation={3} sx={{ marginTop: "0.5em" }}>
             <CardContent>
-              <Grid container spacing={2}>
-                <Grid item xs={2}>
-                  <Link to={`/day/${formatedPrev}`}>
-                    <IconButton color="primary" aria-label="Previous Day">
-                      <ArrowCircleLeftIcon />
-                    </IconButton>
-                  </Link>
-                </Grid>
-                <Grid item xs={8}></Grid>
-                <Grid item xs={2}>
-                  <Link to={`/day/${formatedNext}`}>
-                    <IconButton color="primary" aria-label="Next Day">
-                      <ArrowCircleRightIcon />
-                    </IconButton>
-                  </Link>
-                </Grid>
-              </Grid>
-
-              <Typography
-                sx={{ fontSize: 14, textAlign: "center" }}
-                color="text.secondary"
-                gutterBottom
-              >
-                Trivia of the Day -{" "}
-                {dayWinner && getDate(dayWinner.today[0].clue_date)}
-              </Typography>
-
               <Typography
                 gutterBottom
                 variant="h5"

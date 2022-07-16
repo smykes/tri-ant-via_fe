@@ -53,9 +53,17 @@ const ResponsiveHeader = () => {
   return (
     <>
       <AppBar position="static">
-        <Container maxWidth="xl">
+        <Container
+          maxWidth="xl"
+          sx={{
+            textDecoration: "none",
+          }}
+        >
           <Toolbar disableGutters>
-            <Link to={`/day/${getTodaysDate()}`}>
+            <Link
+              to={`/day/${getTodaysDate()}`}
+              style={{ textDecoration: "none" }}
+            >
               <Typography
                 variant="h6"
                 noWrap

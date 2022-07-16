@@ -21,7 +21,7 @@ interface IForm {
 export const Login = () => {
   const [token, setToken] = useState<Promise<String>>();
   async function getToken(values: IForm): Promise<any> {
-    const res = await fetch(`//localhost:3001/api/login`, {
+    const res = await fetch(`//tri-ant-via-be.herokuapp.com/api/login`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",

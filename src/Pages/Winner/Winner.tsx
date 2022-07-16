@@ -74,7 +74,9 @@ export const Winner = () => {
 
   useEffect(() => {
     async function fetchBooks() {
-      const res = await fetch(`//localhost:3001/api/trivia/user/${winner}`);
+      const res = await fetch(
+        `//tri-ant-via-be.herokuapp.com/api/trivia/user/${winner}`
+      );
       const json = await res.json();
       if (json) {
         const data: any = json.sort(function (a: any, b: any): number {

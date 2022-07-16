@@ -45,7 +45,7 @@ async function saveData(data: IForm): Promise<any> {
   alert();
   const token: string | null = sessionStorage.getItem("token");
   if (token !== null) {
-    const res = await fetch("//localhost:3001/api/trivia", {
+    const res = await fetch("//tri-ant-via-be.herokuapp.com/api/trivia", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -57,7 +57,9 @@ export const Today = () => {
 
   useEffect(() => {
     async function fetchBooks() {
-      const res = await fetch(`//localhost:3001/api/trivia/today`);
+      const res = await fetch(
+        `//tri-ant-via-be.herokuapp.com/api/trivia/today`
+      );
       const json = await res.json();
       if (json) {
         console.log(json);
