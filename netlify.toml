@@ -20,4 +20,8 @@
 [context.production.environment]
     REACT_APP_ENV = "production"
 
+[[redirects]]
+    from="/*"
+    to="/index.html"
+    staus=200
    
