@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Stack, Box, Paper, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { NotFound } from "../NotFound/NotFound";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -32,15 +33,18 @@ export const Month = () => {
   }, []);
 
   return (
-    <Container maxWidth="xs" sx={{ marginTop: "3em" }}>
-      <Box>
-        <Stack spacing={1}>
-          {dailyWinners &&
-            dailyWinners.map((winner) => {
-              return <Item key={winner}>{winner}</Item>;
-            })}
-        </Stack>
-      </Box>
-    </Container>
+    <>
+      {(!dailyWinners || dailyWinners.length === 0) && <NotFound />}
+      <Container maxWidth="xs" sx={{ marginTop: "3em" }}>
+        <Box>
+          <Stack spacing={1}>
+            {dailyWinners &&
+              dailyWinners.map((winner) => {
+                return <Item key={winner}>{winner}</Item>;
+              })}
+          </Stack>
+        </Box>
+      </Container>
+    </>
   );
 };

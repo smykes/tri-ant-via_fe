@@ -11,22 +11,6 @@ import IconButton from "@mui/material/IconButton";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
-// interface IWinPayload {
-//   answer: string;
-//   clue: string;
-//   clue_date: number;
-//   created_at: number;
-//   updated_at: number;
-//   url: string;
-//   winners: IFormArray[];
-// }
-
-// interface IFormArray {
-//   country: string;
-//   flag: string;
-//   user: string;
-// }
-
 interface IWinPayload {
   all_time_count: number;
   month_count: number;
