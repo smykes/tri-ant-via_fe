@@ -38,15 +38,12 @@ export const Names = () => {
 
   return (
     <Container maxWidth="xs">
-      <Card
-        variant="outlined"
-        elevation={3}
-        sx={{ marginTop: "3em", marginBottom: "3em" }}
-      >
+      <Card elevation={3} sx={{ marginTop: "3em", marginBottom: "3em" }}>
         {dayWinner &&
           dayWinner?.map((winner) => {
             return (
               <List
+                key={winner}
                 sx={{
                   width: "100%",
                   maxWidth: 360,
