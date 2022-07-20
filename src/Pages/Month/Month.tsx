@@ -23,7 +23,7 @@ export const Month = () => {
   useEffect(() => {
     async function fetchBooks() {
       const res = await fetch(
-        `//127.0.0.1:3001/api/trivia/winners/${month}/${year}`
+        `//tri-ant-via-be.herokuapp.com/api/trivia/winners/${month}/${year}`
       );
       const json = await res.json();
       console.log(json);
