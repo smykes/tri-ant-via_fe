@@ -17,7 +17,7 @@ export function Landing() {
             Welcome to the colony...
           </Typography>
           <Typography mb="1em" variant="h5" component="div">
-            Trivia results at your antaenae tips.
+            Trivia results at your antennae tips.
           </Typography>
           <img
             width="320"
