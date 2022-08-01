@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
+import { Endpoint } from "../../constants";
+
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import { red } from "@mui/material/colors";
-import { Container, CardContent, Card, Button } from "@mui/material";
-import { Typography } from "@mui/material";
+import { Container, Card } from "@mui/material";
 
 export const Names = () => {
   function getDate(numericDate: number): string {
@@ -24,16 +24,20 @@ export const Names = () => {
   console.log(month);
 
   useEffect(() => {
-    async function fetchBooks() {
-      const res = await fetch(
-        `//tri-ant-via-be.herokuapp.com/api/trivia/users`
-      );
+    async function getAllUsers() {
+      const res = await fetch(`${Endpoint.BACKEND_API}/trivia/users`);
+      console.log(res);
       const json = await res.json();
-      json.sort();
+      console.log(json);
+      // json.sort();
 
       setDayWinner(json);
     }
-    fetchBooks();
+    try {
+      getAllUsers();
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   return (

@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+import { Endpoint } from "../../constants";
+
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button } from "@mui/material";
@@ -21,7 +23,7 @@ interface IForm {
 export const Login = () => {
   const [token, setToken] = useState<Promise<String>>();
   async function getToken(values: IForm): Promise<any> {
-    const res = await fetch(`//tri-ant-via-be.herokuapp.com/api/login`, {
+    const res = await fetch(`${Endpoint.BACKEND_API}/login`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",

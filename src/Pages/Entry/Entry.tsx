@@ -1,3 +1,4 @@
+import { Endpoint } from "../../constants";
 import {
   InputLabel,
   Container,
@@ -45,7 +46,7 @@ async function saveData(data: IForm): Promise<any> {
   alert();
   const token: string | null = sessionStorage.getItem("token");
   if (token !== null) {
-    const res = await fetch("//tri-ant-via-be.herokuapp.com/api/trivia", {
+    const res = await fetch(`${Endpoint.BACKEND_API}/trivia`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

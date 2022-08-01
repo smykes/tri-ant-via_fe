@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, CardContent, CardActions, Grid } from "@mui/material";
+import { Endpoint } from "../../constants";
+
+import { Container, CardContent, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 
@@ -55,7 +57,7 @@ export const Day = () => {
   useEffect(() => {
     async function fetchBooks() {
       const res = await fetch(
-        `//tri-ant-via-be.herokuapp.com/api/trivia/day/${month}/${day}/${year}`
+        `${Endpoint.BACKEND_API}/trivia/day/${month}/${day}/${year}`
       );
       const json = await res.json();
       if (json) {

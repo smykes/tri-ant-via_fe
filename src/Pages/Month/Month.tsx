@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import { Endpoint } from "../../constants";
+
 import { useParams } from "react-router";
 import { Stack, Box, Paper, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { NotFound } from "../NotFound/NotFound";
-import { string } from "yup/lib/locale";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -20,10 +20,12 @@ interface IWinner {
 export const Month = () => {
   const { month, year } = useParams();
   const [dailyWinners, setDailyWinners] = useState<Array<IWinner>>();
+  console.log(Endpoint);
+  console.log(process.env);
   useEffect(() => {
     async function fetchBooks() {
       const res = await fetch(
-        `//tri-ant-via-be.herokuapp.com/api/trivia/winners/${month}/${year}`
+        `${Endpoint.BACKEND_API}/trivia/winners/${month}/${year}`
       );
       const json = await res.json();
       console.log(json);

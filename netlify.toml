@@ -14,7 +14,7 @@
 [build]
     publish = "build/"
     command = "CI=false && npm run build" # CI=false is used because Netlify fails builds that have warnings, which we probably don't want
-    environment = { NODE_VERSION = "14.17.0" }
+    environment = { NODE_VERSION = "14.18.3" }
 # See .env for default environment variable values
 
 [context.production.environment]

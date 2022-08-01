@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Endpoint } from "../../constants";
+
 import {
   CardContent,
   CardActions,
@@ -74,9 +76,8 @@ export const Winner = () => {
 
   useEffect(() => {
     async function fetchBooks() {
-      const res = await fetch(
-        `//tri-ant-via-be.herokuapp.com/api/trivia/user/${winner}`
-      );
+      const res = await fetch(`${Endpoint.BACKEND_API}/trivia/user/${winner}`);
+      console.log(res);
       const json = await res.json();
       if (json) {
         const data: any = json.sort(function (a: any, b: any): number {
