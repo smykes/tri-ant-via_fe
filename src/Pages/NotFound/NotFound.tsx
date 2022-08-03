@@ -35,7 +35,7 @@ export function NotFound() {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Head back to the colonoy</Button>
+          <Link to={"/"}>Head back to the colonoy</Link>
         </CardActions>
       </Card>
     </Container>

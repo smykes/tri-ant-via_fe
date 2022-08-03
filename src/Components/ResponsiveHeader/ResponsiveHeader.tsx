@@ -60,10 +60,7 @@ const ResponsiveHeader = () => {
           }}
         >
           <Toolbar disableGutters>
-            <Link
-              to={`/day/${getTodaysDate()}`}
-              style={{ textDecoration: "none" }}
-            >
+            <Link to={`/`} style={{ textDecoration: "none" }}>
               <Typography
                 variant="h6"
                 noWrap
