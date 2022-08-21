@@ -108,9 +108,11 @@ const ResponsiveHeader = () => {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page.name}</Typography>
-                  </MenuItem>
+                  <Link to={page.to}>
+                    <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{page.name}</Typography>
+                    </MenuItem>
+                  </Link>
                 ))}
               </Menu>
             </Box>
