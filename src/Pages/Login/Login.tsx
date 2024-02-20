@@ -45,7 +45,6 @@ export const Login = () => {
     onSubmit: (values) => {
       const tokenObject = getToken(values);
       tokenObject.then((data) => {
-        console.log(data.token);
         sessionStorage.setItem("token", data.token);
         window.location.assign("/entry");
       });
