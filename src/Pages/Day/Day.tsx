@@ -57,13 +57,13 @@ export const Day = () => {
   useEffect(() => {
     async function fetchBooks() {
       const res = await fetch(
-        `${Endpoint.BACKEND_API}/trivia/day/${month}/${day}/${year}`
+        `${Endpoint.BACKEND_API}trivia/day/${month}/${day}/${year}`
       );
       const json = await res.json();
       if (json) {
-        console.log("---------------");
-        console.log(json);
         setDayWinner(json);
+      } else {
+        console.log("error");
       }
     }
     fetchBooks();
