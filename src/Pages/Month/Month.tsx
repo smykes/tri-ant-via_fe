@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Endpoint } from "../../constants";
 import { differenceInCalendarMonths } from "date-fns";
-import getMonthByString from "../../Helpers/Functions/dateFunctions";
-
+import { getMonthByString } from "../../Helpers/Functions/dateFunctions";
+import { MonthFuture } from "./MonthFuture";
 import { useParams } from "react-router";
+import { MonthNavigation } from "./MonthNavigation";
 import {
   Stack,
   Box,
@@ -37,17 +38,13 @@ export const Month = () => {
     new Date(yearNormalized, monthNormalized, 1),
     new Date()
   );
-  console.log(isFuture);
   const [dailyWinners, setDailyWinners] = useState<Array<IWinner>>();
-  console.log(Endpoint);
-  console.log(process.env);
   useEffect(() => {
     async function fetchBooks() {
       const res = await fetch(
         `${Endpoint.BACKEND_API}/trivia/winners/${month}/${year}`
       );
       const json = await res.json();
-      console.log(json);
       if (json.length) setDailyWinners(json);
       else {
         setDailyWinners(undefined);
@@ -60,27 +57,24 @@ export const Month = () => {
     <>
       <Container maxWidth="xs" sx={{ marginTop: "3em" }}>
         <Box>
+          <Typography
+            sx={{ fontSize: 24, textAlign: "center", fontWeight: 800 }}
+            variant="h1"
+            component="h5"
+            color="text.secondary"
+            gutterBottom
+          >
+            <MonthNavigation
+              monthName={monthName}
+              year={yearNormalized}
+              futureStatus={isFuture}
+              month={monthNormalized}
+            />
+          </Typography>
           {!dailyWinners && (
-            <Card elevation={3} sx={{ marginTop: "3em" }}>
+            <Card elevation={3} sx={{ marginTop: "1em" }}>
               <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  variant="h1"
-                  color="text.secondary"
-                  gutterBottom
-                  mb={0}
-                >
-                  {monthName} {year} Standings
-                </Typography>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {isFuture > 1 && "Nice try time traveler."}
-                  {isFuture <= 1 &&
-                    "smykes is lazy and hasn't imported the data yet. This usually happends on the last day of the month."}
-                </Typography>
+                <MonthFuture futureStatus={isFuture}></MonthFuture>
               </CardContent>
             </Card>
           )}
