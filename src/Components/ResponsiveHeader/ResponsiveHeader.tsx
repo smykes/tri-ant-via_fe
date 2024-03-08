@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
+import { TextField } from "@mui/material";
 
 function getDate(): string {
   const clueDate = new Date();
@@ -28,6 +29,7 @@ const pages = [
   { name: "Today", to: `/day/${getTodaysDate()}` },
   { name: "This Month", to: `/month/${getDate()}` },
   { name: "Competitors", to: "/names" },
+  { name: "Search", to: "/search" },
 ];
 
 const ResponsiveHeader = () => {
@@ -44,10 +46,6 @@ const ResponsiveHeader = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (

@@ -4,6 +4,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login } from "./Pages/Login/Login";
+import { Search } from "./Pages/Search/Search";
 import { Landing } from "./Pages/Landing/Landing";
 import { Entry } from "./Pages/Entry/Entry";
 import { Winner } from "./Pages/Winner/Winner";
@@ -33,6 +34,7 @@ root.render(
     <Routes>
       <Route path="/" element={<Home />}>
         <Route path="/" element={<Landing />} />
+        <Route path="search" element={<Search />} />
         <Route path="login" element={<Login />} />
         <Route path="entry" element={<Entry />} />
         <Route path="winner/:winner" element={<Winner />} />
