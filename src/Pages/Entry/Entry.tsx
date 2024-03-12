@@ -1,4 +1,8 @@
+import { useState } from "react";
 import { Endpoint } from "../../constants";
+import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
   InputLabel,
   Container,
@@ -7,15 +11,11 @@ import {
   Button,
   Select,
   MenuItem,
+  Alert,
 } from "@mui/material";
 
 import { DateTime } from "luxon";
-
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
 import Countries from "../../countries.json";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -37,16 +37,15 @@ const validationSchema = yup.object({
   clue: yup.string().required("A clue is required"),
   answer: yup.string().required("An answer is required"),
   user: yup.string().required("A user name is required"),
-  url: yup.string().required("A link is required"),
+  url: yup.string().url().required("A link is required"),
   location: yup.string().required("A location is required"),
-  date: yup.string().required(),
+  date: yup.date().required(),
 });
 
 async function saveData(data: IForm): Promise<any> {
-  alert();
   const token: string | null = sessionStorage.getItem("token");
   if (token !== null) {
-    const res = await fetch(`${Endpoint.BACKEND_API}/trivia`, {
+    const res = await fetch(`${Endpoint.BACKEND_API}trivia`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,9 +58,11 @@ async function saveData(data: IForm): Promise<any> {
   }
 }
 export const Entry = () => {
+  const [hasError, setHasError] = useState<Boolean>(false);
+  const [hasSuccess, setHasSuccess] = useState<Boolean>(false);
   const formik = useFormik({
     initialValues: {
-      date: "",
+      date: DateTime.now().startOf("day"),
       clue: "",
       answer: "",
       user: "",
@@ -70,10 +71,7 @@ export const Entry = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log(values);
-      var dt = DateTime.fromISO(values.date).startOf("day").toFormat("x");
-      console.log(values.date);
-      console.log(dt);
+      const dt = values.date.startOf("day").toFormat("x");
       const postData = {
         clue_date: dt,
         clue: values.clue,
@@ -88,7 +86,18 @@ export const Entry = () => {
         answer: values.answer,
         url: values.url,
       };
-      await saveData(postData);
+      const submitResponse = await saveData(postData);
+      if (submitResponse) {
+        // TODO: figure out why this isn't working for the user field.
+        // Not sure why resetForm isn't doing this, or why this isn't working
+        formik.resetForm();
+        formik.setFieldValue("user", "");
+        setHasError(false);
+        setHasSuccess(true);
+      } else {
+        setHasSuccess(false);
+        setHasError(true);
+      }
     },
   });
   return (
@@ -109,15 +118,42 @@ export const Entry = () => {
         }}
       >
         <div>
-          {/* <form onSubmit={formik.handleSubmit}> */}
+          {hasError && (
+            <Alert
+              sx={{
+                marginBottom: "1.5em",
+              }}
+              severity="error"
+            >
+              Refresh and try again.
+            </Alert>
+          )}
+          {hasSuccess && (
+            <Alert
+              sx={{
+                marginBottom: "1.5em",
+              }}
+              severity="success"
+            >
+              Success.
+            </Alert>
+          )}
           <form onSubmit={formik.handleSubmit}>
-            <input
-              id="date"
-              name="date"
-              type="date"
-              onChange={formik.handleChange}
-              value={formik.values.date}
-            />
+            <LocalizationProvider dateAdapter={AdapterLuxon}>
+              <DatePicker
+                name="date"
+                label="Clue Date"
+                sx={{
+                  marginBottom: "1.5em",
+                  width: "100%",
+                }}
+                onChange={(value) => {
+                  console.log(value);
+                  formik.setFieldValue("date", value ?? DateTime.now());
+                }}
+                value={formik.values.date}
+              />
+            </LocalizationProvider>
             <TextField
               fullWidth
               id="clue"
@@ -126,7 +162,6 @@ export const Entry = () => {
               type="text"
               value={formik.values.clue}
               onChange={formik.handleChange}
-              // onChange={formik.handleChange}
               error={formik.touched.clue && Boolean(formik.errors.clue)}
               helperText={formik.touched.clue && formik.errors.clue}
               sx={{
@@ -168,7 +203,6 @@ export const Entry = () => {
               name="user"
               label="User"
               type="text"
-              // value={formik.values.password}
               onChange={formik.handleChange}
               error={formik.touched.user && Boolean(formik.errors.user)}
               helperText={formik.touched.user && formik.errors.user}
@@ -208,6 +242,7 @@ export const Entry = () => {
               variant="contained"
               fullWidth
               type="submit"
+              disabled={formik.isSubmitting}
             >
               Submit
             </Button>
