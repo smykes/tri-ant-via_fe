@@ -13,17 +13,6 @@ import { Month } from "./Pages/Month/Month";
 import { Day } from "./Pages/Day/Day";
 import { Home } from "./Templates/Home";
 import { NotFound } from "./Pages/NotFound/NotFound";
-import { DateTime } from "luxon";
-
-const todaysDate = DateTime.now().toFormat("MM'/'dd'/'yyyy");
-// const todaysDateYear = todaysDate.getFullYear();
-// const todaysDateMonth = todaysDate.getMonth() + 1;
-// const todaysDateDay = todaysDate.getDate();
-// const route = `day/${todaysDateMonth}/${todaysDateDay}/${todaysDateYear}`;
-
-// const dayRoute = `day/${todaysDate}`;
-
-console.log("route: ", `day/${todaysDate}`);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
