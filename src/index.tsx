@@ -13,6 +13,7 @@ import { Month } from "./Pages/Month/Month";
 import { Day } from "./Pages/Day/Day";
 import { Home } from "./Templates/Home";
 import { NotFound } from "./Pages/NotFound/NotFound";
+import { ProtectedRoute } from "./Components/ProtectedRoute";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -25,7 +26,14 @@ root.render(
         <Route path="/" element={<Landing />} />
         <Route path="search" element={<Search />} />
         <Route path="login" element={<Login />} />
-        <Route path="entry" element={<Entry />} />
+        <Route
+          path="entry"
+          element={
+            <ProtectedRoute>
+              <Entry />
+            </ProtectedRoute>
+          }
+        />
         <Route path="winner/:winner" element={<Winner />} />
         <Route path="names" element={<Names />} />
         <Route path="month/:month/:year" element={<Month />} />
