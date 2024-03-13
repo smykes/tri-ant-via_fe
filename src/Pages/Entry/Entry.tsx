@@ -58,8 +58,8 @@ async function saveData(data: IForm): Promise<any> {
   }
 }
 export const Entry = () => {
-  const [hasError, setHasError] = useState<Boolean>(false);
-  const [hasSuccess, setHasSuccess] = useState<Boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [hasSuccess, setHasSuccess] = useState<boolean>(false);
   const formik = useFormik({
     initialValues: {
       date: DateTime.now().startOf("day"),

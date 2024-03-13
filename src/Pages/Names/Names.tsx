@@ -11,14 +11,6 @@ import { red } from "@mui/material/colors";
 import { Container, Card } from "@mui/material";
 
 export const Names = () => {
-  function getDate(numericDate: number): string {
-    const clueDate = new Date(numericDate);
-    const clueString = `${
-      clueDate.getMonth() + 1
-    }/${clueDate.getDate()}/${clueDate.getFullYear()}`;
-
-    return clueString;
-  }
   const [dayWinner, setDayWinner] = useState<Array<string>>();
   const month = DateTime.now();
   console.log(month);
@@ -26,11 +18,7 @@ export const Names = () => {
   useEffect(() => {
     async function getAllUsers() {
       const res = await fetch(`${Endpoint.BACKEND_API}/trivia/users`);
-      console.log(res);
       const json = await res.json();
-      console.log(json);
-      // json.sort();
-
       setDayWinner(json);
     }
     try {
