@@ -11,7 +11,6 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
-import { TextField } from "@mui/material";
 
 function getDate(): string {
   const clueDate = new Date();
@@ -34,9 +33,6 @@ const pages = [
 
 const ResponsiveHeader = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
 

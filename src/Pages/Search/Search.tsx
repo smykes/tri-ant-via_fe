@@ -25,15 +25,14 @@ function dateFormatter(test: ISearchReturn): string {
 }
 export const Search = () => {
   function searchText(e: any) {
-    console.log(e.target.value);
-    async function test() {
+    async function getCommonAnswers() {
       const res = await fetch(
         `${Endpoint.BACKEND_API}trivia/search/answers?term=${e.target.value}`
       );
       const json = await res.json();
       setSearchAnswersResults(json);
     }
-    test();
+    getCommonAnswers();
   }
   const [searchAnswerResults, setSearchAnswersResults] =
     useState<Array<ISearchReturn>>();
