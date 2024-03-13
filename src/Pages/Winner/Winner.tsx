@@ -60,7 +60,7 @@ export const Winner = () => {
     setExpanded(!expanded);
   };
 
-  let { winner } = useParams();
+  const { winner } = useParams();
   console.log(winner);
   function getDate(numericDate: number): string {
     const clueDate = new Date(numericDate);

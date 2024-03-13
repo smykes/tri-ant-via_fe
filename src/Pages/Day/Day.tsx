@@ -36,7 +36,7 @@ interface IWinnerArray {
 }
 
 export const Day = () => {
-  let { month, day, year } = useParams();
+  const { month, day, year } = useParams();
   const dt = DateTime.fromISO(`${year}-${month}-${day}`);
   const pageMonth = dt.monthLong;
   const prev = dt.minus({ days: 1 });

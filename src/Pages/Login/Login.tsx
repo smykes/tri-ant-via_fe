@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Endpoint } from "../../constants";
 
 import { useFormik } from "formik";
@@ -17,11 +17,11 @@ const validationSchema = yup.object({
 });
 
 interface IForm {
-  email: String;
-  password: String;
+  email: string;
+  password: string;
 }
 export const Login = () => {
-  const [token, setToken] = useState<Promise<String>>();
+  const [token, setToken] = useState<Promise<string>>();
   async function getToken(values: IForm): Promise<any> {
     const res = await fetch(`${Endpoint.BACKEND_API}/login`, {
       method: "post",
