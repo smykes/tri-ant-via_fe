@@ -3,23 +3,18 @@ import { useState } from "react";
 import { Endpoint } from "../../constants";
 
 import {
-  TextField,
-  Container,
   Card,
-  Stack,
+  Container,
+  Divider,
   List,
   ListItem,
   ListItemText,
+  Stack,
+  TextField,
   Typography,
-  Divider,
 } from "@mui/material";
 import { format } from "date-fns";
-
-interface ISearchReturn {
-  clue: string;
-  answer: string;
-  clue_date: number;
-}
+import { ISearchReturn } from "../../Interfaces/Interfaces";
 
 function dateFormatter(test: ISearchReturn): string {
   return format(new Date(test.clue_date), "PPPP");
@@ -57,32 +52,34 @@ export const Search = () => {
             <List>
               {searchAnswerResults?.map((searchAnswer) => {
                 return (
-                  <>
-                    <ListItem>
-                      <ListItemText
-                        primary={<>{dateFormatter(searchAnswer)}</>}
-                        secondary={
-                          <>
-                            <Typography
-                              component="span"
-                              variant="body2"
-                              color="text.primary"
-                            >
-                              {searchAnswer.clue}
-                            </Typography>
-                            <Typography
-                              component="p"
-                              variant="body2"
-                              color="text.secondary"
-                            >
-                              {searchAnswer.answer}
-                            </Typography>
-                          </>
-                        }
-                      />
-                    </ListItem>
-                    <Divider light />
-                  </>
+                  <ListItem
+                    key={searchAnswer.clue_date}
+                    sx={{ borderBottom: "1px solid lightgrey" }}
+                  >
+                    <ListItemText
+                      key={searchAnswer.clue_date}
+                      primary={<>{dateFormatter(searchAnswer)}</>}
+                      secondary={
+                        <>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="text.primary"
+                          >
+                            {searchAnswer.clue}
+                          </Typography>
+                          <br />
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="text.secondary"
+                          >
+                            {searchAnswer.answer}
+                          </Typography>
+                        </>
+                      }
+                    />
+                  </ListItem>
                 );
               })}
             </List>

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Endpoint } from "../../constants";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import { Container } from "@mui/material";
 import { Paper } from "@mui/material";
+import { IForm } from "../../Interfaces/Interfaces";
 
 const validationSchema = yup.object({
   email: yup
@@ -16,10 +16,6 @@ const validationSchema = yup.object({
   password: yup.string().required("Password is required"),
 });
 
-interface IForm {
-  email: string;
-  password: string;
-}
 export const Login = () => {
   const [token, setToken] = useState<Promise<string>>();
   async function getToken(values: IForm): Promise<any> {

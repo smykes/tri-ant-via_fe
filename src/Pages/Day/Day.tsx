@@ -1,42 +1,30 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Endpoint } from "../../constants";
-
-import { Container, CardContent, CardActions } from "@mui/material";
+import {
+  Container,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  Card,
+} from "@mui/material";
 import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
-
-import { Card, Box } from "@mui/material";
-import { Typography } from "@mui/material";
+import { differenceInCalendarDays } from "date-fns";
 import { DateTime } from "luxon";
-import IconButton from "@mui/material/IconButton";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-
-interface IWinPayload {
-  all_time_count: number;
-  month_count: number;
-  today: ICurrentDay[];
-}
-
-interface ICurrentDay {
-  answer: string;
-  clue: string;
-  clue_date: number;
-  created_at: number;
-  updated_at: number;
-  url: string;
-  winners: IWinnerArray[];
-}
-
-interface IWinnerArray {
-  country: string;
-  flag: string;
-  user: string;
-}
+import { DayFuture } from "./DayFuture";
+import { DayNavigation } from "./DayNavigation";
+import { IWinPayload } from "../../Interfaces/Interfaces";
 
 export const Day = () => {
   const { month, day, year } = useParams();
+  const yearNormalized = year ? parseInt(year) : 1970;
+  const monthNormalized = month ? parseInt(month) : 1;
+  const dayNormalized = day ? parseInt(day) : 1;
+  const isFuture = differenceInCalendarDays(
+    new Date(yearNormalized, monthNormalized - 1, dayNormalized),
+    new Date()
+  );
   const dt = DateTime.fromISO(`${year}-${month}-${day}`);
   const pageMonth = dt.monthLong;
   const prev = dt.minus({ days: 1 });
@@ -44,18 +32,10 @@ export const Day = () => {
   const formatedNext = next.toFormat("MM'/'dd'/'yyyy");
   const formatedPrev = prev.toFormat("MM'/'dd'/'yyyy");
 
-  function getDate(numericDate: number): string {
-    const clueDate = new Date(numericDate);
-    const clueString = `${
-      clueDate.getMonth() + 1
-    }/${clueDate.getDate()}/${clueDate.getFullYear()}`;
-
-    return clueString;
-  }
   const [dayWinner, setDayWinner] = useState<IWinPayload>();
 
   useEffect(() => {
-    async function fetchBooks() {
+    async function dailyWinner() {
       const res = await fetch(
         `${Endpoint.BACKEND_API}trivia/day/${month}/${day}/${year}`
       );
@@ -66,7 +46,7 @@ export const Day = () => {
         console.log("error");
       }
     }
-    fetchBooks();
+    dailyWinner();
   }, [month, day, year]);
 
   return (
@@ -74,22 +54,7 @@ export const Day = () => {
       {!dayWinner?.today && (
         <Card elevation={3} sx={{ marginTop: "3em" }}>
           <CardContent>
-            <Typography
-              sx={{ fontSize: 14 }}
-              variant="h1"
-              color="text.secondary"
-              gutterBottom
-              mb={0}
-            >
-              Trivia of the Day
-            </Typography>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              You must be early! (or trying to peer into the future...)
-            </Typography>
+            <DayFuture futureStatus={isFuture}></DayFuture>
             <Link to={`/day/${formatedPrev}`}>
               <Button size="small">View Yesterday</Button>
             </Link>
@@ -98,29 +63,11 @@ export const Day = () => {
       )}
       {dayWinner && dayWinner.today && (
         <>
-          <Box sx={{ display: "flex", alignItems: "center" }} mt="1.5em" mb="0">
-            <Link to={`/day/${formatedPrev}`}>
-              <IconButton color="primary" aria-label="Previous Day">
-                <ArrowCircleLeftIcon />
-              </IconButton>
-            </Link>
-            <Typography
-              sx={{ textAlign: "center", fontWeight: 800 }}
-              color="text.secondary"
-              gutterBottom
-              variant="h5"
-              component="h1"
-              mb="0"
-            >
-              Trivia of the Day -{" "}
-              {dayWinner && getDate(dayWinner.today[0].clue_date)}
-            </Typography>
-            <Link to={`/day/${formatedNext}`}>
-              <IconButton color="primary" aria-label="Next Day">
-                <ArrowCircleRightIcon />
-              </IconButton>
-            </Link>
-          </Box>
+          <DayNavigation
+            previousDay={formatedPrev}
+            winner={dayWinner}
+            nextDay={formatedNext}
+          />
 
           <Card elevation={3} sx={{ marginTop: "0.5em" }}>
             <CardContent>
