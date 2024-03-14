@@ -1,3 +1,3 @@
 export const Endpoint = {
-  BACKEND_API: process.env.REACT_APP_BACKEND_API,
+  BACKEND_API: import.meta.env.VITE_APP_BACKEND_API,
 };

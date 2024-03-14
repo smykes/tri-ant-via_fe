@@ -29,6 +29,8 @@ interface IWinner {
   count: string;
 }
 export const Month = () => {
+  console.log(import.meta.env.REACT_APP_BACKEND_API);
+
   const { month, year } = useParams();
   const monthName = getMonthByString(month);
   const yearNormalized = year ? parseInt(year) : 1970;
