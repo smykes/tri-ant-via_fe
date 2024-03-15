@@ -15,6 +15,7 @@ import {
   Card,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { IWinner } from "../../Interfaces/Interfaces";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -24,13 +25,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-interface IWinner {
-  name: string;
-  count: string;
-}
 export const Month = () => {
-  console.log(import.meta.env.REACT_APP_BACKEND_API);
-
   const { month, year } = useParams();
   const monthName = getMonthByString(month);
   const yearNormalized = year ? parseInt(year) : 1970;

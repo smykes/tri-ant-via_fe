@@ -11,13 +11,7 @@ import {
   getNextMonthNormalized,
   getPreviousMonthNormalized,
 } from "../../Helpers/Functions/dateFunctions";
-
-interface IMonthNavigation {
-  futureStatus: number;
-  month: number;
-  monthName: string;
-  year: number;
-}
+import { IMonthNavigation } from "../../Interfaces/Interfaces";
 
 export const MonthNavigation = (props: IMonthNavigation) => {
   // month determined by params

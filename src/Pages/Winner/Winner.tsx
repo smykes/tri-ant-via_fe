@@ -3,26 +3,26 @@ import { useEffect, useState } from "react";
 import { Endpoint } from "../../constants";
 
 import {
-  CardContent,
-  CardActions,
-  CardHeader,
-  IconButton,
   Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
   Collapse,
   Divider,
+  IconButton,
   List,
   ListItem,
   ListItemText,
+  Typography,
 } from "@mui/material";
-
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { IconButtonProps } from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
-import { Card } from "@mui/material";
-import { Typography } from "@mui/material";
 import { DateTime } from "luxon";
+import { IWinnersWins } from "../../Interfaces/Interfaces";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -39,21 +39,6 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-interface IWinnersWins {
-  answer: string;
-  clue: string;
-  clue_date: number;
-  created_at: number;
-  updated_at: number;
-  url: string;
-  winners: IWinnersInfo[];
-}
-
-interface IWinnersInfo {
-  country: string;
-  flag: string;
-  user: string;
-}
 export const Winner = () => {
   const [expanded, setExpanded] = useState(false);
 
