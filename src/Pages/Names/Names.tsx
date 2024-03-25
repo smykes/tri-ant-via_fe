@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useEffect, useState } from "react";
 import { Endpoint } from "../../constants";
 
@@ -11,14 +11,13 @@ import Avatar from "@mui/material/Avatar";
 import { red } from "@mui/material/colors";
 import { Container, Card } from "@mui/material";
 
-export const Names = () => {
+export function Names() {
   const [dayWinner, setDayWinner] = useState<Array<string>>();
   const month = DateTime.now();
-  console.log(month);
 
   useEffect(() => {
     async function getAllUsers() {
-      const res = await fetch(`${Endpoint.BACKEND_API}/trivia/users`);
+      const res = await fetch(`${Endpoint.BACKEND_API}trivia/users`);
       const json = await res.json();
       setDayWinner(json);
     }
@@ -31,6 +30,7 @@ export const Names = () => {
 
   return (
     <Container maxWidth="xs">
+      <h1>Players</h1>
       <Card elevation={3} sx={{ marginTop: "3em", marginBottom: "3em" }}>
         {dayWinner &&
           dayWinner?.map((winner) => {
@@ -57,4 +57,4 @@ export const Names = () => {
       </Card>
     </Container>
   );
-};
+}

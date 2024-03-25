@@ -1,7 +1,4 @@
-import * as React from "react";
-import { describe, test } from "@jest/globals";
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
+import { render, screen } from "../../utils/test-utils";
 import { Landing } from "./Landing";
 
 beforeEach(() => {

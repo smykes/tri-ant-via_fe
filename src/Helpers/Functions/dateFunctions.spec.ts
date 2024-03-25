@@ -1,4 +1,5 @@
-import { expect, describe, test } from "@jest/globals";
+// Don't need following line because of the tsconfig
+// import { expect, test, describe } from "vitest";
 import {
   getMonthByString,
   getNextMonthNormalized,
