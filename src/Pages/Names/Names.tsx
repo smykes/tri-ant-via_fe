@@ -42,6 +42,7 @@ export function Names() {
                   maxWidth: 360,
                   bgcolor: "background.paper",
                 }}
+                data-testid="individual_user"
               >
                 <ListItem>
                   <ListItemAvatar>

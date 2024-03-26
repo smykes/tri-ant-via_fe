@@ -53,10 +53,7 @@ describe("Names", () => {
         <Names />
       </BrowserRouter>
     );
-    await screen.findByRole("list");
-    screen.debug();
-
-    const test = screen.getAllByRole("list");
+    await screen.findAllByTestId("individual_user");
     expect(screen.getAllByRole("list")).toHaveLength(6);
   });
 });
