@@ -5,14 +5,8 @@ import { Names } from "./Names";
 import { render, screen } from "../../utils/test-utils";
 import { Endpoint } from "../../constants";
 import { BrowserRouter } from "react-router-dom";
-import { prettyDOM } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
 import React from "react";
-
-// test("test", () => {
-//   render(<Names />);
-//   expect(true).toBeTruthy();
-// });
 
 describe("Names", () => {
   it("MSW Intercepts call", async () => {
