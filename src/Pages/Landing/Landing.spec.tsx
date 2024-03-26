@@ -1,5 +1,7 @@
+import { beforeEach, describe, expect, test } from "vitest";
 import { render, screen } from "../../utils/test-utils";
 import { Landing } from "./Landing";
+import React from "react";
 
 beforeEach(() => {
   render(<Landing />);
