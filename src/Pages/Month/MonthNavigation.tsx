@@ -12,6 +12,7 @@ import {
   getPreviousMonthNormalized,
 } from "../../Helpers/Functions/dateFunctions";
 import { IMonthNavigation } from "../../Interfaces/Interfaces";
+import { Skeleton } from "@mui/material";
 
 export const MonthNavigation = (props: IMonthNavigation) => {
   // month determined by params
@@ -23,7 +24,7 @@ export const MonthNavigation = (props: IMonthNavigation) => {
 
   const { month, year } = useParams();
   // Tells whether the next month is in the future
-  const { futureStatus } = props;
+  const { futureStatus, isLoading, hasError } = props;
   // Turns the year into a number
   const yearNormalized = year ? parseInt(year) : 1970;
   // Turns the date into a number
@@ -44,37 +45,55 @@ export const MonthNavigation = (props: IMonthNavigation) => {
   const previousMonthNormalized = getPreviousMonthNormalized(previousMonth);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      mt="1.5em"
-      mb="0"
-    >
-      <Link to={`/month/${previousMonthNormalized}/${previousYear}`}>
-        <IconButton color="primary" aria-label="Previous Month">
-          <ArrowCircleLeftIcon />
-        </IconButton>
-      </Link>
-      <Typography
-        sx={{ textAlign: "center", fontWeight: 800 }}
-        color="text.secondary"
-        gutterBottom
-        variant="h5"
-        component="h1"
-        mb="0"
-      >
-        {monthName} {yearNormalized}
-      </Typography>
-      {futureStatus < 1 && (
-        <Link to={`/month/${nextMonthNormalized}/${nextYear}`}>
-          <IconButton color="primary" aria-label="Next Month">
-            <ArrowCircleRightIcon />
-          </IconButton>
-        </Link>
+    <>
+      {!isLoading && !hasError && (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          mt="1.5em"
+          mb="0"
+        >
+          <Link to={`/month/${previousMonthNormalized}/${previousYear}`}>
+            <IconButton color="primary" aria-label="Previous Month">
+              <ArrowCircleLeftIcon />
+            </IconButton>
+          </Link>
+          <Typography
+            sx={{ textAlign: "center", fontWeight: 800 }}
+            color="text.secondary"
+            gutterBottom
+            variant="h5"
+            component="h1"
+            mb="0"
+          >
+            {monthName} {yearNormalized}
+          </Typography>
+          {futureStatus < 1 && (
+            <Link to={`/month/${nextMonthNormalized}/${nextYear}`}>
+              <IconButton color="primary" aria-label="Next Month">
+                <ArrowCircleRightIcon />
+              </IconButton>
+            </Link>
+          )}
+        </Box>
       )}
-    </Box>
+      {isLoading && !hasError && (
+        <Skeleton
+          variant="rectangular"
+          width={400}
+          height={32}
+          sx={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "1em",
+            marginBottom: "1em",
+          }}
+        />
+      )}
+      {!isLoading && hasError && ""}
+    </>
   );
 };

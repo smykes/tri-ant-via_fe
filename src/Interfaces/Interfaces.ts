@@ -29,6 +29,8 @@ export interface IMonthNavigation {
   month: number;
   monthName: string;
   year: number;
+  isLoading: boolean;
+  hasError: boolean;
 }
 
 export interface IWinner {

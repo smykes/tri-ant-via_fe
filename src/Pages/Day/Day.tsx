@@ -8,6 +8,7 @@ import {
   Typography,
   Button,
   Card,
+  Skeleton,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { differenceInCalendarDays } from "date-fns";
@@ -15,6 +16,7 @@ import { DateTime } from "luxon";
 import { DayFuture } from "./DayFuture";
 import { DayNavigation } from "./DayNavigation";
 import { IWinPayload } from "../../Interfaces/Interfaces";
+import ErrorMessage from "../../Components/ErrorMessage";
 
 export const Day = () => {
   const { month, day, year } = useParams();
@@ -33,125 +35,157 @@ export const Day = () => {
   const formatedPrev = prev.toFormat("MM'/'dd'/'yyyy");
 
   const [dayWinner, setDayWinner] = useState<IWinPayload>();
+  const [isLoading, setIsLoading] = useState<Boolean>(true);
+  const [hasError, setHasError] = useState<Boolean>(false);
 
   useEffect(() => {
     async function dailyWinner() {
-      const res = await fetch(
-        `${Endpoint.BACKEND_API}trivia/day/${month}/${day}/${year}`
-      );
-      const json = await res.json();
-      if (json) {
+      try {
+        const res = await fetch(
+          `${Endpoint.BACKEND_API}trivia/day/${month}/${day}/${year}`
+        );
+        const json = await res.json();
+        setIsLoading(false);
+        setHasError(false);
         setDayWinner(json);
-      } else {
-        console.log("error");
+      } catch (e) {
+        setIsLoading(false);
+        setHasError(true);
+        console.log(e);
       }
     }
     dailyWinner();
   }, [month, day, year]);
 
   return (
-    <Container maxWidth="xs">
-      {!dayWinner?.today && (
-        <Card elevation={3} sx={{ marginTop: "3em" }}>
-          <CardContent>
-            <DayFuture futureStatus={isFuture}></DayFuture>
-            <Link to={`/day/${formatedPrev}`}>
-              <Button size="small">View Yesterday</Button>
-            </Link>
-          </CardContent>
-        </Card>
-      )}
-      {dayWinner && dayWinner.today && (
+    <>
+      {isLoading && !hasError && (
         <>
-          <DayNavigation
-            previousDay={formatedPrev}
-            winner={dayWinner}
-            nextDay={formatedNext}
+          <Skeleton
+            variant="rectangular"
+            width={400}
+            height={32}
+            sx={{
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginTop: "1em",
+              marginBottom: "1em",
+            }}
           />
 
-          <Card elevation={3} sx={{ marginTop: "0.5em" }}>
-            <CardContent>
-              <Typography
-                gutterBottom
-                variant="h5"
-                sx={{ fontSize: 12, marginTop: "1em" }}
-                component="div"
-              >
-                Clue
-              </Typography>
-              <Typography gutterBottom variant="h5" component="label">
-                {dayWinner && <div>{dayWinner.today[0].clue}</div>}
-              </Typography>
-              <Typography
-                gutterBottom
-                variant="h5"
-                sx={{ fontSize: 10, marginTop: "1em" }}
-                component="div"
-              >
-                Answer
-              </Typography>
-              <Typography variant="h6" color="text.secondary">
-                {dayWinner.today[0].answer}
-              </Typography>
-              <Typography
-                gutterBottom
-                variant="h5"
-                sx={{ fontSize: 12, marginTop: "1em" }}
-                component="div"
-              >
-                Winner
-              </Typography>
-              <Link to={`/winner/${dayWinner.today[0].winners[0].user}`}>
-                {dayWinner.today[0].winners[0].user}
-              </Link>
-              <Typography
-                gutterBottom
-                variant="h5"
-                sx={{ fontSize: 12, marginTop: "1em" }}
-                component="div"
-              >
-                Country
-              </Typography>
-              <Typography variant="h6" color="text.secondary">
-                {dayWinner.today[0].winners[0].country} &nbsp;
-                {dayWinner.today[0].winners[0].flag}
-              </Typography>
-              <Typography
-                gutterBottom
-                variant="h5"
-                sx={{ fontSize: 12, marginTop: "1em" }}
-                component="div"
-              >
-                🥇 All Time Wins
-              </Typography>
-              <Typography variant="h6" color="text.secondary">
-                {dayWinner.all_time_count}
-              </Typography>
-
-              <Typography
-                gutterBottom
-                variant="h5"
-                sx={{ fontSize: 12, marginTop: "1em" }}
-                component="div"
-              >
-                🥇 {pageMonth} Wins
-              </Typography>
-              <Typography variant="h6" color="text.secondary">
-                {dayWinner.month_count}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                target="_blank"
-                href={dayWinner.today[0].url}
-                size="small"
-              >
-                Learn More
-              </Button>
-            </CardActions>
-          </Card>
+          <Skeleton
+            variant="rectangular"
+            width={400}
+            height={250}
+            sx={{ marginLeft: "auto", marginRight: "auto", marginTop: "1rem" }}
+          />
         </>
       )}
-    </Container>
+
+      <Container maxWidth="xs">
+        {!dayWinner?.today && !isLoading && !hasError && (
+          <Card elevation={3} sx={{ marginTop: "3em" }}>
+            <CardContent>
+              <DayFuture futureStatus={isFuture}></DayFuture>
+              <Link to={`/day/${formatedPrev}`}>
+                <Button size="small">View Yesterday</Button>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
+        {dayWinner && dayWinner.today && !isLoading && !hasError && (
+          <>
+            <DayNavigation
+              previousDay={formatedPrev}
+              winner={dayWinner}
+              nextDay={formatedNext}
+            />
+
+            <Card elevation={3} sx={{ marginTop: "0.5em" }}>
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  sx={{ fontSize: 12, marginTop: "1em" }}
+                  component="div"
+                >
+                  Clue
+                </Typography>
+                <Typography gutterBottom variant="h5" component="label">
+                  {dayWinner && <div>{dayWinner.today[0].clue}</div>}
+                </Typography>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  sx={{ fontSize: 10, marginTop: "1em" }}
+                  component="div"
+                >
+                  Answer
+                </Typography>
+                <Typography variant="h6" color="text.secondary">
+                  {dayWinner.today[0].answer}
+                </Typography>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  sx={{ fontSize: 12, marginTop: "1em" }}
+                  component="div"
+                >
+                  Winner
+                </Typography>
+                <Link to={`/winner/${dayWinner.today[0].winners[0].user}`}>
+                  {dayWinner.today[0].winners[0].user}
+                </Link>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  sx={{ fontSize: 12, marginTop: "1em" }}
+                  component="div"
+                >
+                  Country
+                </Typography>
+                <Typography variant="h6" color="text.secondary">
+                  {dayWinner.today[0].winners[0].country} &nbsp;
+                  {dayWinner.today[0].winners[0].flag}
+                </Typography>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  sx={{ fontSize: 12, marginTop: "1em" }}
+                  component="div"
+                >
+                  🥇 All Time Wins
+                </Typography>
+                <Typography variant="h6" color="text.secondary">
+                  {dayWinner.all_time_count}
+                </Typography>
+
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  sx={{ fontSize: 12, marginTop: "1em" }}
+                  component="div"
+                >
+                  🥇 {pageMonth} Wins
+                </Typography>
+                <Typography variant="h6" color="text.secondary">
+                  {dayWinner.month_count}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  target="_blank"
+                  href={dayWinner.today[0].url}
+                  size="small"
+                >
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+          </>
+        )}
+        {!isLoading && hasError && <ErrorMessage />}
+      </Container>
+    </>
   );
 };
