@@ -1,14 +1,8 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import { Card, CardContent, Typography, CardActions } from "@mui/material";
 import { Container } from "@mui/system";
-
-export function NotFound() {
+import * as React from "react";
+import { Link } from "react-router-dom";
+const ErrorMessage = () => {
   return (
     <Container maxWidth="xs" sx={{ marginTop: "3em" }}>
       <Card sx={{ minWidth: 275 }}>
@@ -17,12 +11,12 @@ export function NotFound() {
             Oh, oh.
           </Typography>
           <Typography mb="1em" variant="h5" component="div">
-            You seem to have lost the pheremone trail...
+            Something went wrong, hope it's not cordecyps.
           </Typography>
           <img
             width="320"
-            height="240"
-            src="/images/ant_columbo.png"
+            height="320"
+            src="/images/ant_zombie.webp"
             alt="A confused ant."
           />
           <Typography
@@ -39,10 +33,9 @@ export function NotFound() {
             {new Date().getFullYear()}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Link to={"/"}>Head back to the colonoy</Link>
-        </CardActions>
       </Card>
     </Container>
   );
-}
+};
+
+export default ErrorMessage;
