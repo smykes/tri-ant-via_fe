@@ -19,7 +19,7 @@ export const DayNavigation = (props: IDayNavigation) => {
 
   return (
     <Box sx={{ display: "flex", alignItems: "center" }} mt="1.5em" mb="0">
-      <Link to={`/day/${previousDay}`}>
+      <Link data-testid="back-date" to={`/day/${previousDay}`}>
         <IconButton color="primary" aria-label="Previous Day">
           <ArrowCircleLeftIcon />
         </IconButton>
@@ -34,7 +34,7 @@ export const DayNavigation = (props: IDayNavigation) => {
       >
         Trivia of the Day - {winner && getDate(winner.today[0].clue_date)}
       </Typography>
-      <Link to={`/day/${nextDay}`}>
+      <Link data-testid="forward-date" to={`/day/${nextDay}`}>
         <IconButton color="primary" aria-label="Next Day">
           <ArrowCircleRightIcon />
         </IconButton>

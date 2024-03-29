@@ -61,7 +61,7 @@ export const Winner = () => {
   console.log(month);
 
   useEffect(() => {
-    async function fetchBooks() {
+    async function fetchWinners() {
       const res = await fetch(`${Endpoint.BACKEND_API}/trivia/user/${winner}`);
       console.log(res);
       const json = await res.json();
@@ -74,7 +74,7 @@ export const Winner = () => {
         setWinnerInfo(data);
       }
     }
-    fetchBooks();
+    fetchWinners();
   }, [winner]);
 
   return (
