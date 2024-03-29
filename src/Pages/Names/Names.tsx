@@ -78,7 +78,7 @@ export function Names() {
                           {winner.flag}
                         </Avatar>
                       </ListItemAvatar>
-                      <Link to={`/winner/${winner}`}>{winner.user}</Link>
+                      <Link to={`/winner/${winner.user}`}>{winner.user}</Link>
                     </ListItem>
                   </List>
                 );
