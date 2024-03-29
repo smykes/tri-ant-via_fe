@@ -1,19 +1,18 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Endpoint } from "../../constants";
-
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import { red } from "@mui/material/colors";
 import { Container, Card, Typography, Skeleton } from "@mui/material";
 import ErrorMessage from "../../Components/ErrorMessage";
+import { IWinnersList } from "../../Interfaces/Interfaces";
 
 export function Names() {
-  const [dayWinner, setDayWinner] = useState<Array<string>>();
+  const [dayWinner, setDayWinner] = useState<Array<IWinnersList>>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
 
@@ -60,7 +59,7 @@ export function Names() {
               dayWinner?.map((winner) => {
                 return (
                   <List
-                    key={winner}
+                    key={winner.user}
                     sx={{
                       width: "100%",
                       maxWidth: 360,
@@ -70,11 +69,16 @@ export function Names() {
                   >
                     <ListItem>
                       <ListItemAvatar>
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="initial">
-                          {winner[1].toUpperCase()}
+                        <Avatar
+                          sx={{
+                            backgroundColor: "white",
+                          }}
+                          aria-label="image of a flag"
+                        >
+                          {winner.flag}
                         </Avatar>
                       </ListItemAvatar>
-                      <Link to={`/winner/${winner}`}>{winner}</Link>
+                      <Link to={`/winner/${winner}`}>{winner.user}</Link>
                     </ListItem>
                   </List>
                 );

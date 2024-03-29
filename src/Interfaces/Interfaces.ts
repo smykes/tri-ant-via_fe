@@ -70,3 +70,8 @@ export interface ISearchReturn {
   answer: string;
   clue_date: number;
 }
+
+export interface IWinnersList {
+  user: string;
+  flag: string;
+}
