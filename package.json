@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --base=/",
     "preview": "vite preview",
     "test": "vitest --mode test",
     "test:watch": "vitest --watch --mode test",
