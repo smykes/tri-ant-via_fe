@@ -117,7 +117,8 @@ export const Month = () => {
                   dailyWinners.map((value) => {
                     return (
                       <Item key={value.name}>
-                        {value.name} - {value.count}
+                        <a href={`/winner/${value.name}`}>{value.name}</a> -
+                        {value.count}
                       </Item>
                     );
                   })}
