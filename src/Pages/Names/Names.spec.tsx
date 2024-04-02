@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  */
-import { Names } from "./Names";
+import Names from "./Names";
 import { render, screen } from "../../utils/test-utils";
 import { Endpoint } from "../../constants";
 import { BrowserRouter } from "react-router-dom";

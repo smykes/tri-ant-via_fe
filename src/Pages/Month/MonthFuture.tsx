@@ -1,7 +1,7 @@
 import Typography from "@mui/material/Typography";
 import { IFuture } from "../../Interfaces/Interfaces";
 
-export const MonthFuture = (props: IFuture) => {
+const MonthFuture = (props: IFuture) => {
   const { futureStatus } = props;
   return (
     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -12,3 +12,5 @@ export const MonthFuture = (props: IFuture) => {
     </Typography>
   );
 };
+
+export default MonthFuture;

@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { Endpoint } from "../../constants";
 import { differenceInCalendarMonths } from "date-fns";
 import { getMonthByString } from "../../Helpers/Functions/dateFunctions";
-import { MonthFuture } from "./MonthFuture";
 import { useParams } from "react-router";
-import { MonthNavigation } from "./MonthNavigation";
 import {
   Stack,
   Box,
@@ -17,7 +15,9 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { IWinner } from "../../Interfaces/Interfaces";
-import ErrorMessage from "../../Components/ErrorMessage";
+const MonthNavigation = lazy(() => import("./MonthNavigation"));
+const MonthFuture = lazy(() => import("./MonthFuture"));
+const ErrorMessage = lazy(() => import("../../Components/ErrorMessage"));
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

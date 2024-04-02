@@ -6,7 +6,7 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { IDayNavigation } from "../../Interfaces/Interfaces";
 
-export const DayNavigation = (props: IDayNavigation) => {
+const DayNavigation = (props: IDayNavigation) => {
   const { previousDay, winner, nextDay } = props;
   function getDate(numericDate: number): string {
     const clueDate = new Date(numericDate);
@@ -42,3 +42,5 @@ export const DayNavigation = (props: IDayNavigation) => {
     </Box>
   );
 };
+
+export default DayNavigation;

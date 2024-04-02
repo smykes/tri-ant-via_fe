@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { Endpoint } from "../../constants";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
@@ -8,10 +7,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import { Container, Card, Typography, Skeleton } from "@mui/material";
-import ErrorMessage from "../../Components/ErrorMessage";
+const ErrorMessage = lazy(() => import("../../Components/ErrorMessage"));
 import { IWinnersList } from "../../Interfaces/Interfaces";
 
-export function Names() {
+function Names() {
   const [dayWinner, setDayWinner] = useState<Array<IWinnersList>>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -112,3 +111,5 @@ export function Names() {
     </>
   );
 }
+
+export default Names;

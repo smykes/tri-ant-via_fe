@@ -14,7 +14,7 @@ import {
 import { IMonthNavigation } from "../../Interfaces/Interfaces";
 import { Skeleton } from "@mui/material";
 
-export const MonthNavigation = (props: IMonthNavigation) => {
+const MonthNavigation = (props: IMonthNavigation) => {
   // month determined by params
   // month as an integer
   // year determined by params
@@ -97,3 +97,5 @@ export const MonthNavigation = (props: IMonthNavigation) => {
     </>
   );
 };
+
+export default MonthNavigation;
