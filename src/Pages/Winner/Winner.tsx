@@ -121,7 +121,7 @@ export const Winner = () => {
                 {winnerInfo.map((info) => {
                   return (
                     <>
-                      <ListItem>
+                      <ListItem key={info.clue_date}>
                         <ListItemText
                           primary={`${getDate(info.clue_date)}`}
                           secondary={

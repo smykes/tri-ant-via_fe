@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import { lazy, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Endpoint } from "../../constants";
 import {
@@ -14,11 +15,11 @@ import { Link } from "react-router-dom";
 import { differenceInCalendarDays } from "date-fns";
 import { DateTime } from "luxon";
 import { DayFuture } from "./DayFuture";
-import { DayNavigation } from "./DayNavigation";
 import { IWinPayload } from "../../Interfaces/Interfaces";
-import ErrorMessage from "../../Components/ErrorMessage";
+const DayNavigation = lazy(() => import("./DayNavigation"));
+const ErrorMessage = lazy(() => import("../../Components/ErrorMessage"));
 
-export const Day = () => {
+const Day = () => {
   const { month, day, year } = useParams();
   const yearNormalized = year ? parseInt(year) : 1970;
   const monthNormalized = month ? parseInt(month) : 1;
@@ -189,3 +190,5 @@ export const Day = () => {
     </>
   );
 };
+
+export default Day;

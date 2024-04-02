@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import React from "react";
-import { Day } from "./Day";
+import Day from "./Day";
 import { render, screen } from "../../utils/test-utils";
 import { Endpoint } from "../../constants";
 import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";

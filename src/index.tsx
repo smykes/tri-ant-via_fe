@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
@@ -8,9 +7,10 @@ import { Search } from "./Pages/Search/Search";
 import { Landing } from "./Pages/Landing/Landing";
 import { Entry } from "./Pages/Entry/Entry";
 import { Winner } from "./Pages/Winner/Winner";
-import { Names } from "./Pages/Names/Names";
 import { Month } from "./Pages/Month/Month";
-import { Day } from "./Pages/Day/Day";
+import Day from "./Pages/Day/Day";
+import Names from "./Pages/Names/Names";
+
 import { Home } from "./Templates/Home";
 import { NotFound } from "./Pages/NotFound/NotFound";
 import { ProtectedRoute } from "./Components/ProtectedRoute";
