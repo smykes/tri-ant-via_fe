@@ -1,7 +1,6 @@
 import { lazy, useEffect, useState } from "react";
 import { Endpoint } from "../../constants";
 import { Link } from "react-router-dom";
-import { DateTime } from "luxon";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -14,8 +13,6 @@ function Names() {
   const [dayWinner, setDayWinner] = useState<Array<IWinnersList>>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
-
-  const month = DateTime.now();
 
   useEffect(() => {
     async function getAllUsers() {

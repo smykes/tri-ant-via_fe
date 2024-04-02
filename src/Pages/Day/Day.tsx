@@ -1,6 +1,5 @@
-import React from "react";
-import { lazy, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Endpoint } from "../../constants";
 import {
   Container,
@@ -11,29 +10,47 @@ import {
   Card,
   Skeleton,
 } from "@mui/material";
-import { Link } from "react-router-dom";
-import { differenceInCalendarDays } from "date-fns";
-import { DateTime } from "luxon";
+import { addDays, differenceInCalendarDays, subDays, format } from "date-fns";
 import { DayFuture } from "./DayFuture";
+import DayNavigation from "./DayNavigation";
+import ErrorMessage from "../../Components/ErrorMessage";
 import { IWinPayload } from "../../Interfaces/Interfaces";
-const DayNavigation = lazy(() => import("./DayNavigation"));
-const ErrorMessage = lazy(() => import("../../Components/ErrorMessage"));
 
 const Day = () => {
+  // Get the date being viewed from the parameters in the URL
   const { month, day, year } = useParams();
+  // Try and parse the year, if something goes wrong just set it to 1970 (ts error)
   const yearNormalized = year ? parseInt(year) : 1970;
+  // Try and parse the month, if something goes wrong just set it to 1 (ts error)
   const monthNormalized = month ? parseInt(month) : 1;
+  // Try and parse the day, if something goes wrong just set it to 1 (ts error)
   const dayNormalized = day ? parseInt(day) : 1;
+  /*-- 
+    Check if the date being vieweed is in the future month needs to have subtracted 
+    because the URL month is not zero indexed, but the library is.
+  --*/
   const isFuture = differenceInCalendarDays(
     new Date(yearNormalized, monthNormalized - 1, dayNormalized),
     new Date()
   );
-  const dt = DateTime.fromISO(`${year}-${month}-${day}`);
-  const pageMonth = dt.monthLong;
-  const prev = dt.minus({ days: 1 });
-  const next = dt.plus({ days: 1 });
-  const formatedNext = next.toFormat("MM'/'dd'/'yyyy");
-  const formatedPrev = prev.toFormat("MM'/'dd'/'yyyy");
+
+  const monthNameFromUrl = format(
+    new Date(yearNormalized, monthNormalized - 1),
+    "MMMM"
+  );
+  const previousDayFromUrl = subDays(
+    new Date(yearNormalized, monthNormalized - 1, dayNormalized),
+    1
+  );
+  const nextDayFromUrl = addDays(
+    new Date(yearNormalized, monthNormalized - 1, dayNormalized),
+    1
+  );
+  const formatedNextDayFromUrl = format(new Date(nextDayFromUrl), "LL/dd/yyyy");
+  const formatedPreviousDayFromUrl = format(
+    new Date(previousDayFromUrl),
+    "LL/dd/yyyy"
+  );
 
   const [dayWinner, setDayWinner] = useState<IWinPayload>();
   const [isLoading, setIsLoading] = useState<Boolean>(true);
@@ -88,7 +105,7 @@ const Day = () => {
           <Card elevation={3} sx={{ marginTop: "3em" }}>
             <CardContent>
               <DayFuture futureStatus={isFuture}></DayFuture>
-              <Link to={`/day/${formatedPrev}`}>
+              <Link to={`/day/${formatedPreviousDayFromUrl}`}>
                 <Button size="small">View Yesterday</Button>
               </Link>
             </CardContent>
@@ -97,9 +114,9 @@ const Day = () => {
         {dayWinner && dayWinner.today && !isLoading && !hasError && (
           <>
             <DayNavigation
-              previousDay={formatedPrev}
+              previousDay={formatedPreviousDayFromUrl}
               winner={dayWinner}
-              nextDay={formatedNext}
+              nextDay={formatedNextDayFromUrl}
             />
 
             <Card elevation={3} sx={{ marginTop: "0.5em" }}>
@@ -167,7 +184,7 @@ const Day = () => {
                   sx={{ fontSize: 12, marginTop: "1em" }}
                   component="div"
                 >
-                  🥇 {pageMonth} Wins
+                  🥇 {monthNameFromUrl} Wins
                 </Typography>
                 <Typography variant="h6" color="text.secondary">
                   {dayWinner.month_count}
