@@ -21,7 +21,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { IconButtonProps } from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
-import { DateTime } from "luxon";
 import { IWinnersWins } from "../../Interfaces/Interfaces";
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -57,8 +56,6 @@ export const Winner = () => {
     return clueString;
   }
   const [winnerInfo, setWinnerInfo] = useState<Array<IWinnersWins>>();
-  const month = DateTime.now();
-  console.log(month);
 
   useEffect(() => {
     async function fetchWinners() {

@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
-import { DateTime } from "luxon";
+import { format } from "date-fns";
 
 function getDate(): string {
   const clueDate = new Date();
@@ -20,7 +20,7 @@ function getDate(): string {
 }
 
 function getTodaysDate(): string {
-  const today = DateTime.now().toFormat("MM/dd/yyyy");
+  const today = format(new Date(), "LL/dd/yyyy");
   return today;
 }
 

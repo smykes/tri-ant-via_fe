@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { Endpoint } from "../../constants";
-import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
@@ -15,7 +16,7 @@ import {
   Alert,
 } from "@mui/material";
 
-import { DateTime } from "luxon";
+import { startOfDay, startOfToday, format } from "date-fns";
 import Countries from "../../countries.json";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -63,7 +64,7 @@ export const Entry = () => {
   const [hasSuccess, setHasSuccess] = useState<boolean>(false);
   const formik = useFormik({
     initialValues: {
-      date: DateTime.now().startOf("day"),
+      date: startOfToday(),
       clue: "",
       answer: "",
       user: "",
@@ -72,7 +73,7 @@ export const Entry = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const dt = values.date.startOf("day").toFormat("x");
+      const dt = format(startOfDay(values.date), "T");
       const postData = {
         clue_date: dt,
         clue: values.clue,
@@ -140,7 +141,7 @@ export const Entry = () => {
             </Alert>
           )}
           <form onSubmit={formik.handleSubmit}>
-            <LocalizationProvider dateAdapter={AdapterLuxon}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 name="date"
                 label="Clue Date"
@@ -150,7 +151,7 @@ export const Entry = () => {
                 }}
                 onChange={(value) => {
                   console.log(value);
-                  formik.setFieldValue("date", value ?? DateTime.now());
+                  formik.setFieldValue("date", value ?? new Date());
                 }}
                 value={formik.values.date}
               />
