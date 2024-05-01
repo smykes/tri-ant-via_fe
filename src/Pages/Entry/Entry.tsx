@@ -56,7 +56,10 @@ async function saveData(data: IForm): Promise<any> {
       },
       body: JSON.stringify(data),
     });
-    return res.json;
+    if (res.status !== 500) {
+      return res.json;
+    }
+    return false;
   }
 }
 export const Entry = () => {
@@ -89,6 +92,7 @@ export const Entry = () => {
         url: values.url,
       };
       const submitResponse = await saveData(postData);
+      console.log(submitResponse);
       if (submitResponse) {
         // TODO: figure out why this isn't working for the user field.
         // Not sure why resetForm isn't doing this, or why this isn't working
