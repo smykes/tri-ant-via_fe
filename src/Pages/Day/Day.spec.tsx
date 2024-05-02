@@ -1,6 +1,8 @@
 /**
  * @vitest-environment jsdom
  */
+
+// Add a test for empty array.
 import React from "react";
 import Day from "./Day";
 import { render, screen } from "../../utils/test-utils";

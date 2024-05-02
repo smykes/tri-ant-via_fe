@@ -65,6 +65,7 @@ const Day = () => {
         const json = await res.json();
         setIsLoading(false);
         setHasError(false);
+        console.log(json);
         setDayWinner(json);
       } catch (e) {
         setIsLoading(false);
@@ -101,7 +102,7 @@ const Day = () => {
       )}
 
       <Container maxWidth="xs">
-        {!dayWinner?.today && !isLoading && !hasError && (
+        {dayWinner?.today.length === 0 && !isLoading && !hasError && (
           <Card elevation={3} sx={{ marginTop: "3em" }}>
             <CardContent>
               <DayFuture futureStatus={isFuture}></DayFuture>
@@ -111,7 +112,7 @@ const Day = () => {
             </CardContent>
           </Card>
         )}
-        {dayWinner && dayWinner.today && !isLoading && !hasError && (
+        {dayWinner && dayWinner.today.length > 0 && !isLoading && !hasError && (
           <>
             <DayNavigation
               previousDay={formatedPreviousDayFromUrl}
