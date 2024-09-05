@@ -75,3 +75,8 @@ export interface IWinnersList {
   user: string;
   flag: string;
 }
+
+export interface ITopList {
+  name: string;
+  count: number;
+}

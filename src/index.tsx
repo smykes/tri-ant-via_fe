@@ -8,6 +8,7 @@ import { Landing } from "./Pages/Landing/Landing";
 import { Entry } from "./Pages/Entry/Entry";
 import { Winner } from "./Pages/Winner/Winner";
 import { Month } from "./Pages/Month/Month";
+import { Leaderboard } from "./Pages/Leaderboard/Leaderboard";
 import Day from "./Pages/Day/Day";
 import Names from "./Pages/Names/Names";
 
@@ -36,6 +37,7 @@ root.render(
         />
         <Route path="winner/:winner" element={<Winner />} />
         <Route path="names" element={<Names />} />
+        <Route path="leaderboard" element={<Leaderboard />} />
         <Route path="month/:month/:year" element={<Month />} />
         <Route path="day/:month/:day/:year" element={<Day />} />
         <Route path="*" element={<NotFound />} />
