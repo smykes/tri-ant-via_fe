@@ -11,13 +11,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
-
-function getDate(): string {
-  const clueDate = new Date();
-  const clueString = `0${clueDate.getMonth() + 1}/${clueDate.getFullYear()}`;
-
-  return clueString;
-}
+import { getZeroLedMonthYear } from "../../Helpers/Functions/dateFunctions";
 
 function getTodaysDate(): string {
   const today = format(new Date(), "LL/dd/yyyy");
@@ -26,7 +20,7 @@ function getTodaysDate(): string {
 
 const pages = [
   { name: "Today", to: `/day/${getTodaysDate()}` },
-  { name: "This Month", to: `/month/${getDate()}` },
+  { name: "This Month", to: `/month/${getZeroLedMonthYear(new Date())}` },
   { name: "Competitors", to: "/names" },
   { name: "Search", to: "/search" },
 ];

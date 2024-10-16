@@ -65,7 +65,6 @@ const Day = () => {
         const json = await res.json();
         setIsLoading(false);
         setHasError(false);
-        console.log(json);
         setDayWinner(json);
       } catch (e) {
         setIsLoading(false);

@@ -4,6 +4,15 @@ function getMonthByString(monthNumber: string | undefined): string {
   return MONTHS[monthNumberIndex - 1];
 }
 
+function getZeroLedMonthYear(clueDate: Date): string {
+  const month = clueDate.getMonth();
+  const year = clueDate.getFullYear();
+  const monthYearDate =
+    month < 9 ? `0${month + 1}/${year}` : `${month + 1}/${year}`;
+
+  return monthYearDate;
+}
+
 function getNextMonthNormalized(monthNumber: number): string {
   let nextMonthNormalized = "01";
   switch (monthNumber) {
@@ -93,4 +102,9 @@ function getPreviousMonthNormalized(monthNumber: number): string {
   }
   return previousMonthNormalized;
 }
-export { getMonthByString, getNextMonthNormalized, getPreviousMonthNormalized };
+export {
+  getMonthByString,
+  getNextMonthNormalized,
+  getPreviousMonthNormalized,
+  getZeroLedMonthYear,
+};

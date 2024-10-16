@@ -19,7 +19,6 @@ export const Leaderboard = () => {
       try {
         const res = await fetch(`${Endpoint.BACKEND_API}trivia/top`);
         const json = await res.json();
-        console.log(json);
         setIsLoading(false);
         setDayWinner(json);
       } catch (e) {
