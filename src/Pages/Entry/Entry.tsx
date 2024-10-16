@@ -92,7 +92,6 @@ export const Entry = () => {
         url: values.url,
       };
       const submitResponse = await saveData(postData);
-      console.log(submitResponse);
       if (submitResponse) {
         // TODO: figure out why this isn't working for the user field.
         // Not sure why resetForm isn't doing this, or why this isn't working
@@ -154,7 +153,6 @@ export const Entry = () => {
                   width: "100%",
                 }}
                 onChange={(value) => {
-                  console.log(value);
                   formik.setFieldValue("date", value ?? new Date());
                 }}
                 value={formik.values.date}

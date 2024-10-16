@@ -3,7 +3,6 @@ import { IFuture } from "../../Interfaces/Interfaces";
 
 export const DayFuture = (props: IFuture) => {
   const { futureStatus } = props;
-  console.log(futureStatus);
   return (
     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
       {futureStatus >= 0 &&

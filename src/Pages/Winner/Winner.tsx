@@ -46,7 +46,6 @@ export const Winner = () => {
   };
 
   const { winner } = useParams();
-  console.log(winner);
   function getDate(numericDate: number): string {
     const clueDate = new Date(numericDate);
     const clueString = `${
@@ -60,7 +59,6 @@ export const Winner = () => {
   useEffect(() => {
     async function fetchWinners() {
       const res = await fetch(`${Endpoint.BACKEND_API}/trivia/user/${winner}`);
-      console.log(res);
       const json = await res.json();
       if (json) {
         const data: any = json.sort(function (a: any, b: any): number {
