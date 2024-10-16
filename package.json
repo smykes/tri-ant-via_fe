@@ -31,7 +31,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-private-property-in-object": "^7.25.8",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^6.0.0",
@@ -47,7 +47,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "^1.4.0",
     "cross-fetch": "^4.0.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.0.0",
     "jsdom": "^23.0.1",
     "msw": "^2.2.3",
     "sass": "^1.71.0",

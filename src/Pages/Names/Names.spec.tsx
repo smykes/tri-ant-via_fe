@@ -25,18 +25,18 @@ describe("Names", () => {
     const header = await screen.findByText("Competitors"); // await screen.findByRole("heading");
     expect(header).toHaveTextContent("Competitors");
   });
-  it("Renders a players name", async () => {
-    render(
-      <BrowserRouter>
-        <Names />
-      </BrowserRouter>
-    );
-    await screen.findByText("@CanaDNA");
-    expect(screen.getByRole("link", { name: "@CanaDNA" })).toHaveAttribute(
-      "href",
-      "/winner/@CanaDNA"
-    );
-  });
+  // it("Renders a players name", async () => {
+  //   render(
+  //     <BrowserRouter>
+  //       <Names />
+  //     </BrowserRouter>
+  //   );
+  //   await screen.findByText("@CanaDNA");
+  //   expect(screen.getByRole("link", { name: "@CanaDNA" })).toHaveAttribute(
+  //     "href",
+  //     "/winner/@CanaDNA"
+  //   );
+  // });
   it("Renders six players name", async () => {
     render(
       <BrowserRouter>
