@@ -1,6 +1,6 @@
 {
   "name": "tri-ant-via_fe",
-  "version": "0.8.15",
+  "version": "0.8.14",
   "engines": {
     "node": ">=18 <22"
   },
