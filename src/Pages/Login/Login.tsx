@@ -29,7 +29,13 @@ export const Login = () => {
     });
 
     const body = await res.json();
-    return body;
+    const returnPayload = {
+      message: body.msg,
+      status: res.status,
+      token: body.token,
+    };
+
+    return returnPayload;
   }
 
   const formik = useFormik({
@@ -41,8 +47,10 @@ export const Login = () => {
     onSubmit: (values) => {
       const tokenObject = getToken(values);
       tokenObject.then((data) => {
-        sessionStorage.setItem("token", data.token);
-        window.location.assign("/entry");
+        if (data.status === 200) {
+          sessionStorage.setItem("token", data.token);
+          window.location.assign("/entry");
+        }
       });
     },
   });
