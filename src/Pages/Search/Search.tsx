@@ -74,7 +74,9 @@ export const Search = () => {
                             variant="body2"
                             color="text.secondary"
                           >
-                            {searchAnswer.answer}
+                            <a target="_blank" href={searchAnswer.url}>
+                              {searchAnswer.answer}
+                            </a>
                           </Typography>
                           <br />
                           <Typography
