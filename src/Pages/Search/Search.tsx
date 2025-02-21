@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { ISearchReturn } from "../../Interfaces/Interfaces";
 
 function dateFormatter(test: ISearchReturn): string {
+  console.log(test);
   return format(new Date(test.clue_date), "PPPP");
 }
 export const Search = () => {

@@ -69,6 +69,7 @@ export interface ISearchReturn {
   clue: string;
   answer: string;
   clue_date: number;
+  winners: IWinnersInfo[];
 }
 
 export interface IWinnersList {
