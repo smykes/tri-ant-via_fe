@@ -16,8 +16,8 @@ import {
 import { format } from "date-fns";
 import { ISearchReturn } from "../../Interfaces/Interfaces";
 
-function dateFormatter(test: ISearchReturn): string {
-  return format(new Date(test.clue_date), "PPPP");
+function dateFormatter(searchResults: ISearchReturn): string {
+  return format(new Date(searchResults.clue_date), "PPPP");
 }
 export const Search = () => {
   function searchText(e: any) {
@@ -74,7 +74,20 @@ export const Search = () => {
                             variant="body2"
                             color="text.secondary"
                           >
-                            {searchAnswer.answer}
+                            <a target="_blank" href={searchAnswer.url}>
+                              {searchAnswer.answer}
+                            </a>
+                          </Typography>
+                          <br />
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="text.secondary"
+                          >
+                            {searchAnswer.winners[0].flag}{" "}
+                            <a href={`winner/${searchAnswer.winners[0].user}`}>
+                              {searchAnswer.winners[0].user}
+                            </a>
                           </Typography>
                         </>
                       }

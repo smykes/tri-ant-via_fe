@@ -66,9 +66,11 @@ interface IWinnersInfo {
 }
 
 export interface ISearchReturn {
-  clue: string;
   answer: string;
   clue_date: number;
+  clue: string;
+  url: string;
+  winners: IWinnersInfo[];
 }
 
 export interface IWinnersList {
