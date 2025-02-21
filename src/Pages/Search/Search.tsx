@@ -85,7 +85,9 @@ export const Search = () => {
                             color="text.secondary"
                           >
                             {searchAnswer.winners[0].flag}{" "}
-                            {searchAnswer.winners[0].user}
+                            <a href={`winner/${searchAnswer.winners[0].user}`}>
+                              {searchAnswer.winners[0].user}
+                            </a>
                           </Typography>
                         </>
                       }
