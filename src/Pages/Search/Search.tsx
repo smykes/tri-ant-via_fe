@@ -17,7 +17,6 @@ import { format } from "date-fns";
 import { ISearchReturn } from "../../Interfaces/Interfaces";
 
 function dateFormatter(test: ISearchReturn): string {
-  console.log(test);
   return format(new Date(test.clue_date), "PPPP");
 }
 export const Search = () => {
@@ -76,6 +75,15 @@ export const Search = () => {
                             color="text.secondary"
                           >
                             {searchAnswer.answer}
+                          </Typography>
+                          <br />
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="text.secondary"
+                          >
+                            {searchAnswer.winners[0].flag}{" "}
+                            {searchAnswer.winners[0].user}
                           </Typography>
                         </>
                       }
