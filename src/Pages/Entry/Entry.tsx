@@ -47,7 +47,7 @@ const validationSchema = yup.object({
 async function saveData(data: IForm): Promise<any> {
   const token: string | null = sessionStorage.getItem("token");
   if (token !== null) {
-    const res = await fetch(`${Endpoint.BACKEND_API}trivia`, {
+    const response = await fetch(`${Endpoint.BACKEND_API}trivia`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,14 +56,18 @@ async function saveData(data: IForm): Promise<any> {
       },
       body: JSON.stringify(data),
     });
-    if (res.status !== 500) {
-      return res.json;
+    if (!response.ok) {
+      return response.json();
+    } else {
+      return response.json();
     }
-    return false;
   }
 }
 export const Entry = () => {
   const [hasError, setHasError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
   const [hasSuccess, setHasSuccess] = useState<boolean>(false);
   const formik = useFormik({
     initialValues: {
@@ -92,14 +96,26 @@ export const Entry = () => {
         url: values.url,
       };
       const submitResponse = await saveData(postData);
-      if (submitResponse) {
+      if (!submitResponse.error) {
         // TODO: figure out why this isn't working for the user field.
         // Not sure why resetForm isn't doing this, or why this isn't working
         formik.resetForm();
         formik.setFieldValue("user", "");
+        const options: Intl.DateTimeFormatOptions = {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        };
+        const parsedDate = submitResponse.clue_date
+          ? new Date(submitResponse.clue_date)
+          : null;
+        const returnDate =
+          parsedDate?.toLocaleDateString("en-US", options) || "";
+        setSuccessMessage(`Sucesfully saved entry for ${returnDate}`);
         setHasError(false);
         setHasSuccess(true);
       } else {
+        setErrorMessage(submitResponse.message);
         setHasSuccess(false);
         setHasError(true);
       }
@@ -130,7 +146,7 @@ export const Entry = () => {
               }}
               severity="error"
             >
-              Refresh and try again.
+              {errorMessage}
             </Alert>
           )}
           {hasSuccess && (
@@ -140,7 +156,7 @@ export const Entry = () => {
               }}
               severity="success"
             >
-              Success.
+              {successMessage}
             </Alert>
           )}
           <form onSubmit={formik.handleSubmit}>
@@ -207,6 +223,7 @@ export const Entry = () => {
               name="user"
               label="User"
               type="text"
+              value={formik.values.user}
               onChange={formik.handleChange}
               error={formik.touched.user && Boolean(formik.errors.user)}
               helperText={formik.touched.user && formik.errors.user}
