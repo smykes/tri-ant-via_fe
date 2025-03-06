@@ -19,7 +19,7 @@ const validationSchema = yup.object({
 export const Login = () => {
   const [token, setToken] = useState<Promise<string>>();
   async function getToken(values: IForm): Promise<any> {
-    const res = await fetch(`${Endpoint.BACKEND_API}/login`, {
+    const res = await fetch(`${Endpoint.BACKEND_API}login`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
