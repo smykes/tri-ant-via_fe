@@ -223,6 +223,7 @@ export const Entry = () => {
               name="user"
               label="User"
               type="text"
+              value={formik.values.user}
               onChange={formik.handleChange}
               error={formik.touched.user && Boolean(formik.errors.user)}
               helperText={formik.touched.user && formik.errors.user}
