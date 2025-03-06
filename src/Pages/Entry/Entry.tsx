@@ -66,6 +66,8 @@ async function saveData(data: IForm): Promise<any> {
 export const Entry = () => {
   const [hasError, setHasError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
   const [hasSuccess, setHasSuccess] = useState<boolean>(false);
   const formik = useFormik({
     initialValues: {
@@ -99,6 +101,17 @@ export const Entry = () => {
         // Not sure why resetForm isn't doing this, or why this isn't working
         formik.resetForm();
         formik.setFieldValue("user", "");
+        const options: Intl.DateTimeFormatOptions = {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        };
+        const parsedDate = submitResponse.clue_date
+          ? new Date(submitResponse.clue_date)
+          : null;
+        const returnDate =
+          parsedDate?.toLocaleDateString("en-US", options) || "";
+        setSuccessMessage(`Sucesfully saved entry for ${returnDate}`);
         setHasError(false);
         setHasSuccess(true);
       } else {
@@ -143,7 +156,7 @@ export const Entry = () => {
               }}
               severity="success"
             >
-              Success.
+              {successMessage}
             </Alert>
           )}
           <form onSubmit={formik.handleSubmit}>
