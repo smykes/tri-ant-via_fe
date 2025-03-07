@@ -3,6 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/system";
+import Curtesy from "../../Components/Curtesy";
 
 export function Landing() {
   return (
@@ -21,14 +22,7 @@ export function Landing() {
             src="/images/ant_trivia.png"
             alt="An ant trivia host."
           />
-          <Typography mt="1em" textAlign="center" component="p">
-            Courtesy{" "}
-            <a href="https://sciantsmedia.com" target="blank">
-              Sciants Media
-            </a>{" "}
-            &#169;
-            {new Date().getFullYear()}
-          </Typography>
+          <Curtesy />
         </CardContent>
       </Card>
     </Container>

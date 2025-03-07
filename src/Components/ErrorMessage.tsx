@@ -2,6 +2,8 @@ import { Card, CardContent, Typography, CardActions } from "@mui/material";
 import { Container } from "@mui/system";
 import * as React from "react";
 import { Link } from "react-router-dom";
+import Curtesy from "./Curtesy";
+
 const ErrorMessage = () => {
   return (
     <Container maxWidth="xs" sx={{ marginTop: "3em" }}>
@@ -19,19 +21,7 @@ const ErrorMessage = () => {
             src="/images/ant_zombie.webp"
             alt="A confused ant."
           />
-          <Typography
-            sx={{ fontSize: "0.5rem" }}
-            mt="1em"
-            textAlign="center"
-            component="p"
-          >
-            Courtesy{" "}
-            <a href="https://sciantsmedia.com" target="blank">
-              Sciants Media
-            </a>{" "}
-            &#169;
-            {new Date().getFullYear()}
-          </Typography>
+          <Curtesy />
         </CardContent>
       </Card>
     </Container>

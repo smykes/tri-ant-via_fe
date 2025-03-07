@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { Container } from "@mui/system";
+import Curtesy from "../../Components/Curtesy";
 
 export function NotFound() {
   return (
@@ -25,19 +26,7 @@ export function NotFound() {
             src="/images/ant_columbo.png"
             alt="A confused ant."
           />
-          <Typography
-            sx={{ fontSize: "0.5rem" }}
-            mt="1em"
-            textAlign="center"
-            component="p"
-          >
-            Courtesy{" "}
-            <a href="https://sciantsmedia.com" target="blank">
-              Sciants Media
-            </a>{" "}
-            &#169;
-            {new Date().getFullYear()}
-          </Typography>
+          <Curtesy />
         </CardContent>
         <CardActions>
           <Link to={"/"}>Head back to the colonoy</Link>
