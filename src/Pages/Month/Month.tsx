@@ -15,9 +15,9 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { IWinner } from "../../Interfaces/Interfaces";
-const MonthNavigation = lazy(() => import("./MonthNavigation"));
-const MonthFuture = lazy(() => import("./MonthFuture"));
-const ErrorMessage = lazy(() => import("../../Components/ErrorMessage"));
+import MonthNavigation from "./MonthNavigation";
+import MonthFuture from "./MonthFuture";
+import ErrorMessage from "../../Components/ErrorMessage";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
