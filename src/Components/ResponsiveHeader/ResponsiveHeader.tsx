@@ -102,6 +102,11 @@ const ResponsiveHeader = () => {
                     </MenuItem>
                   </Link>
                 ))}
+                <Link to="login">
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">Login</Typography>
+                  </MenuItem>
+                </Link>
               </Menu>
             </Box>
             <Typography
@@ -122,7 +127,13 @@ const ResponsiveHeader = () => {
             >
               🐜 TriAntVia
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+                justifyContent: { xs: "none", md: "flex-end" },
+              }}
+            >
               {pages.map((page) => (
                 <Button
                   component={Link}
@@ -134,6 +145,14 @@ const ResponsiveHeader = () => {
                   {page.name}
                 </Button>
               ))}
+              <Button
+                component={Link}
+                to="login"
+                color="inherit"
+                sx={{ my: 2, color: "white", alignContent: "end" }}
+              >
+                Login
+              </Button>
             </Box>
           </Toolbar>
         </Container>
