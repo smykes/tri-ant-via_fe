@@ -18,6 +18,15 @@ function getTodaysDate(): string {
   return today;
 }
 
+function checkLoggedInStatus(): string | null {
+  return sessionStorage.getItem("token");
+}
+
+function logOut(): void {
+  sessionStorage.removeItem("token");
+  window.location.reload();
+}
+
 const pages = [
   { name: "Today", to: `/day/${getTodaysDate()}` },
   { name: "This Month", to: `/month/${getZeroLedMonthYear(new Date())}` },
@@ -102,11 +111,25 @@ const ResponsiveHeader = () => {
                     </MenuItem>
                   </Link>
                 ))}
-                <Link to="login">
+                {!checkLoggedInStatus() ? (
+                  <Link to="login">
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">Login</Typography>
+                    </MenuItem>
+                  </Link>
+                ) : (
                   <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Login</Typography>
+                    <Typography
+                      sx={{
+                        textDecoration: "underline",
+                        color: "rgb(0, 0, 238)",
+                      }}
+                      textAlign="center"
+                    >
+                      Logout
+                    </Typography>
                   </MenuItem>
-                </Link>
+                )}
               </Menu>
             </Box>
             <Typography
@@ -145,14 +168,24 @@ const ResponsiveHeader = () => {
                   {page.name}
                 </Button>
               ))}
-              <Button
-                component={Link}
-                to="login"
-                color="inherit"
-                sx={{ my: 2, color: "white", alignContent: "end" }}
-              >
-                Login
-              </Button>
+              {!checkLoggedInStatus() ? (
+                <Button
+                  component={Link}
+                  to="login"
+                  color="inherit"
+                  sx={{ my: 2, color: "white", alignContent: "end" }}
+                >
+                  Login
+                </Button>
+              ) : (
+                <Button
+                  onClick={logOut}
+                  color="inherit"
+                  sx={{ my: 2, color: "white", alignContent: "end" }}
+                >
+                  Logout
+                </Button>
+              )}
             </Box>
           </Toolbar>
         </Container>
