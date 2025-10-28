@@ -1,6 +1,6 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { Endpoint } from "../../constants";
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { Endpoint } from '../../constants';
 
 import {
   Avatar,
@@ -15,13 +15,13 @@ import {
   ListItem,
   ListItemText,
   Typography,
-} from "@mui/material";
-import { red } from "@mui/material/colors";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { IconButtonProps } from "@mui/material/IconButton";
-import { styled } from "@mui/material/styles";
-import { useParams } from "react-router-dom";
-import { IWinnersWins } from "../../Interfaces/Interfaces";
+} from '@mui/material';
+import { red } from '@mui/material/colors';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { IconButtonProps } from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
+import { useParams } from 'react-router-dom';
+import { IWinnersWins } from '../../Interfaces/Interfaces';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -31,9 +31,9 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
   }),
 }));
@@ -78,9 +78,9 @@ export const Winner = () => {
         <Card
           sx={{
             maxWidth: 345,
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "3em",
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: '3em',
           }}
         >
           {winnerInfo && (

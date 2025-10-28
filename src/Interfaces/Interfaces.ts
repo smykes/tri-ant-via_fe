@@ -73,6 +73,10 @@ export interface ISearchReturn {
   winners: IWinnersInfo[];
 }
 
+export interface ISearchUsersReturn {
+  name: string;
+}
+
 export interface IWinnersList {
   user: string;
   flag: string;

@@ -1,10 +1,10 @@
-import React from "react";
-import { useState } from "react";
-import { Endpoint } from "../../constants";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { Endpoint } from '../../constants';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {
   InputLabel,
   Container,
@@ -14,12 +14,14 @@ import {
   Select,
   MenuItem,
   Alert,
-} from "@mui/material";
+  Autocomplete,
+} from '@mui/material';
+import { ISearchReturn, ISearchUsersReturn } from '../../Interfaces/Interfaces';
 
-import { startOfDay, startOfToday, format } from "date-fns";
-import Countries from "../../countries.json";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import { startOfDay, startOfToday, format } from 'date-fns';
+import Countries from '../../countries.json';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 interface IForm {
   answer: string;
@@ -36,23 +38,23 @@ interface IFormArray {
 }
 
 const validationSchema = yup.object({
-  clue: yup.string().required("A clue is required"),
-  answer: yup.string().required("An answer is required"),
-  user: yup.string().required("A user name is required"),
-  url: yup.string().url().required("A link is required"),
-  location: yup.string().required("A location is required"),
+  clue: yup.string().required('A clue is required'),
+  answer: yup.string().required('An answer is required'),
+  user: yup.string().required('A user name is required'),
+  url: yup.string().url().required('A link is required'),
+  location: yup.string().required('A location is required'),
   date: yup.date().required(),
 });
 
 async function saveData(data: IForm): Promise<any> {
-  const token: string | null = sessionStorage.getItem("token");
+  const token: string | null = sessionStorage.getItem('token');
   if (token !== null) {
     const response = await fetch(`${Endpoint.BACKEND_API}trivia`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "x-access-token": "token-value",
-        "x-auth-token": token,
+        'Content-Type': 'application/json',
+        'x-access-token': 'token-value',
+        'x-auth-token': token,
       },
       body: JSON.stringify(data),
     });
@@ -64,32 +66,44 @@ async function saveData(data: IForm): Promise<any> {
   }
 }
 export const Entry = () => {
+  const [searchUserResults, setSearchUserResults] = useState<
+    Array<ISearchUsersReturn>
+  >([]);
+  const [inputValue, setInputValue] = useState<string>('');
   const [hasError, setHasError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [successMessage, setSuccessMessage] = useState<string>("");
-
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
   const [hasSuccess, setHasSuccess] = useState<boolean>(false);
+
+  async function fetchUsersFromAPI(inputValue: string) {
+    const res = await fetch(
+      `${Endpoint.BACKEND_API}trivia/search/users?name=${inputValue}`
+    );
+    const json = await res.json();
+    setSearchUserResults(json);
+  }
   const formik = useFormik({
     initialValues: {
       date: startOfToday(),
-      clue: "",
-      answer: "",
-      user: "",
-      location: "",
-      url: "",
+      clue: '',
+      answer: '',
+      user: '',
+      location: '',
+      url: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const dt = format(startOfDay(values.date), "T");
+      console.log(values);
+      const dt = format(startOfDay(values.date), 'T');
       const postData = {
         clue_date: dt,
         clue: values.clue,
         winners: [
           {
             user: values.user,
-            country: values.location.split("-")[1],
-            flag: values.location.split("-")[2],
-            country_code: values.location.split("-")[0],
+            country: values.location.split('-')[1],
+            flag: values.location.split('-')[2],
+            country_code: values.location.split('-')[0],
           },
         ],
         answer: values.answer,
@@ -100,17 +114,17 @@ export const Entry = () => {
         // TODO: figure out why this isn't working for the user field.
         // Not sure why resetForm isn't doing this, or why this isn't working
         formik.resetForm();
-        formik.setFieldValue("user", "");
+        formik.setFieldValue('user', '');
         const options: Intl.DateTimeFormatOptions = {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
         };
         const parsedDate = submitResponse.clue_date
           ? new Date(submitResponse.clue_date)
           : null;
         const returnDate =
-          parsedDate?.toLocaleDateString("en-US", options) || "";
+          parsedDate?.toLocaleDateString('en-US', options) || '';
         setSuccessMessage(`Sucesfully saved entry for ${returnDate}`);
         setHasError(false);
         setHasSuccess(true);
@@ -121,28 +135,33 @@ export const Entry = () => {
       }
     },
   });
+
+  useEffect(() => {
+    fetchUsersFromAPI(inputValue);
+  }, [inputValue]);
+
   return (
     <Container
       sx={{
-        width: "100%",
-        height: "100%",
-        margin: "2.5em",
+        width: '100%',
+        height: '100%',
+        margin: '2.5em',
       }}
     >
       <Paper
         elevation={3}
         sx={{
           width: 300,
-          height: "auto",
-          padding: "2em",
-          margin: "0 auto",
+          height: 'auto',
+          padding: '2em',
+          margin: '0 auto',
         }}
       >
         <div>
           {hasError && (
             <Alert
               sx={{
-                marginBottom: "1.5em",
+                marginBottom: '1.5em',
               }}
               severity="error"
             >
@@ -152,7 +171,7 @@ export const Entry = () => {
           {hasSuccess && (
             <Alert
               sx={{
-                marginBottom: "1.5em",
+                marginBottom: '1.5em',
               }}
               severity="success"
             >
@@ -165,11 +184,11 @@ export const Entry = () => {
                 name="date"
                 label="Clue Date"
                 sx={{
-                  marginBottom: "1.5em",
-                  width: "100%",
+                  marginBottom: '1.5em',
+                  width: '100%',
                 }}
                 onChange={(value) => {
-                  formik.setFieldValue("date", value ?? new Date());
+                  formik.setFieldValue('date', value ?? new Date());
                 }}
                 value={formik.values.date}
               />
@@ -185,7 +204,7 @@ export const Entry = () => {
               error={formik.touched.clue && Boolean(formik.errors.clue)}
               helperText={formik.touched.clue && formik.errors.clue}
               sx={{
-                marginBottom: "1.5em",
+                marginBottom: '1.5em',
               }}
             />
             <TextField
@@ -199,7 +218,7 @@ export const Entry = () => {
               error={formik.touched.answer && Boolean(formik.errors.answer)}
               helperText={formik.touched.answer && formik.errors.answer}
               sx={{
-                marginBottom: "1.5em",
+                marginBottom: '1.5em',
               }}
             />
             <TextField
@@ -213,25 +232,41 @@ export const Entry = () => {
               error={formik.touched.url && Boolean(formik.errors.url)}
               helperText={formik.touched.url && formik.errors.url}
               sx={{
-                marginBottom: "1.5em",
+                marginBottom: '1.5em',
               }}
             />
             <hr />
-            <TextField
-              fullWidth
-              id="user"
-              name="user"
-              label="User"
-              type="text"
-              value={formik.values.user}
-              onChange={formik.handleChange}
-              error={formik.touched.user && Boolean(formik.errors.user)}
-              helperText={formik.touched.user && formik.errors.user}
+            <Autocomplete
               sx={{
-                marginBottom: "1.5em",
-                marginTop: "1.5em",
+                paddingTop: '1rem',
+                paddingBottom: '1rem',
+                marginLeft: 'auto',
+                marginRight: 'auto',
               }}
+              value={
+                searchUserResults.find(
+                  (user) => user.name === formik.values.user
+                ) || null
+              }
+              getOptionLabel={(option) => option.name}
+              onChange={(e, value) => {
+                formik.setFieldValue('user', value?.name || '');
+              }}
+              // onInputChange={(e, value) => setInputValue(value)}
+              renderInput={(params) => (
+                <TextField
+                  key={params.id}
+                  {...params}
+                  id="user"
+                  name="user"
+                  label="User"
+                  error={formik.touched.user && Boolean(formik.errors.user)}
+                  helperText={formik.touched.user && formik.errors.user}
+                />
+              )}
+              options={searchUserResults}
             />
+
             <InputLabel id="location-label">Location</InputLabel>
             <Select
               fullWidth
@@ -243,7 +278,7 @@ export const Entry = () => {
               value={formik.values.location}
               error={formik.touched.location && Boolean(formik.errors.location)}
               sx={{
-                marginBottom: "1.5em",
+                marginBottom: '1.5em',
               }}
             >
               {Countries.map((country) => {
